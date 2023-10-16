@@ -7,9 +7,10 @@ import axios from "axios";
 function App() {
     const [count, setCount] = useState(0)
 
+
     const handleFetchFromNest = async () => {
         const res = await axios.get('/api/cats')
-        console.log('res', res)
+        console.log('res test', res)
     }
 
     useEffect(() => {
