@@ -1,46 +1,50 @@
-import { Avatar, Paper } from '@mui/material';
-import { deepPurple } from '@mui/material/colors';
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import { useState } from "react";
+import "./HomePage.css";
+import Post from './Post';
+import charityFinder from "../../assets/charityFinder.png";
+
+const postArray: Post[] = [
+  {
+    id: 0,
+    user: "Diana",
+    location: "Woburn",
+    time: "19 hrs ago",
+    photo: ["https://www.w3schools.com/images/lamp.jpg", "https://robohash.org/$10?set=set2&size=180x180"],
+    content: "Can someone please recommend a good place to get a remote car starter installed on a subaru.  And what is the better unit (brand) and features to get.",
+    Liked: 0,
+    youLiked: false,
+    comments: [],
+  },
+  {
+    id: 1,
+    user: "Ken",
+    avator: charityFinder,
+    location: "Toronto",
+    time: "1 day ago",
+    photo: [],
+    content: "I’m searching for leave removal in the frond and backyard old plants removal, does anyone have any suggestions?",
+    Liked: 4,
+    youLiked: true,
+    comments: [""],
+  },
+];
 
 const HomePage = () => {
+  const [postList, setPostList] = useState<Post[]>(postArray);
+
+  const postChange = (inputPost: Post) => {
+    const tempArray = postList.map(item => {
+      if (item.id === inputPost.id) return inputPost;
+      return item;
+    });
+    setPostList(tempArray);
+  }
+
   return (
-    <div style={{ display: "flex", flexDirection: "column", alignItems: "center"}}>
-      <Paper elevation={2} sx={{ height: "fit-content", width: "70%" }}>
-        <div style={{ display: "flex", flexDirection: "column", padding: 15, gap: 20}}>
-
-          <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center"}}>
-            <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center"}}>
-              <Avatar sx={{ bgcolor: deepPurple[500] }}>D</Avatar>
-              <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", justifyContent: "center", marginLeft: 15}}>
-                <span style={{ fontSize: 15, fontWeight: 600}}>Diana</span>
-                <span style={{ fontSize: 13 }}>Woburn • 19 hrs ago</span>
-              </div>
-            </div>
-            <MoreHorizIcon style={{ cursor: "pointer" }}/>
-          </div>
-
-          <div style={{ textAlign: "left"}}>
-            Can someone please recommend a good place to get a remote car starter installed on a subaru.  And what is the better unit (brand) and features to get.
-          </div>
-
-          <div>
-            <span style={{ color: "#b4b8b5"}}>Be the first to react</span>
-            <div></div>
-          </div>
-        </div>
-        
-        {/* <Stack spacing={{ sm: 15 }} direction="row" useFlexGap flexWrap="wrap">
-          <Avatar sx={{ bgcolor: deepPurple[500] }}>D</Avatar>
-          <Stack>
-            <span>Diana</span>
-          </Stack>
-          <Stack>
-            <span>Broadlands</span>
-            <span>-</span>
-            <span>1 min ago</span>
-          </Stack>
-        </Stack> */}
-      </Paper>
+    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 20, paddingBottom: 50}}>
+      {
+        postList.map(item => <Post post={item} changePost={(e: Post) => postChange(e)}/>)
+      }
     </div>
   )
 }
