@@ -1,5 +1,6 @@
 import {useEffect, useState} from 'react';
 import './App.css';
+import { Routes, Route, Outlet, useNavigate } from 'react-router-dom';
 import axios from "axios";
 import { styled, useTheme, alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -23,8 +24,10 @@ import HomeIcon from '@mui/icons-material/Home';
 import LocalActivityIcon from '@mui/icons-material/LocalActivity';
 import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import MilitaryTechIcon from '@mui/icons-material/MilitaryTech';
-import { Paper } from '@mui/material';
-import { TextField } from '@mui/material';
+import HomePage from './components/Home/HomePage';
+import ActivitiesPage from './components/Activities/ActivitiesPage';
+import SalePage from './components/Sale/SalePage';
+import PointPage from './components/Point/PointPage';
 
 type drawerItemsProps = {
     id: string,
@@ -34,22 +37,22 @@ type drawerItemsProps = {
 
 const drawerItems: drawerItemsProps[] = [
 {
-    id: "Home",
+    id: "home",
     title: "Home",
     icon: <HomeIcon />,
 },
 {
-    id: "Activities",
+    id: "activities",
     title: "Activities",
     icon: <LocalActivityIcon />,
 },
 {
-    id: "Sale",
+    id: "sale",
     title: "For Sale & Free",
     icon: <LocalOfferIcon />,
 },
 {
-    id: "Point",
+    id: "point",
     title: "Point",
     icon: <MilitaryTechIcon />,
 },
@@ -147,9 +150,10 @@ const DrawerHeader = styled('div')(({ theme }) => ({
     justifyContent: 'flex-start',
 }));
 
-const App = () => {
+const Navigation = () => {
     const theme = useTheme();
     const [open, setOpen] = useState(false);
+    const navigate = useNavigate();
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -218,27 +222,41 @@ const App = () => {
             <List>
             {drawerItems.map((item) => (
                 <ListItem key={item.id} disablePadding>
-                <ListItemButton>
-                    <ListItemIcon>
-                    {item.icon}
-                    </ListItemIcon>
-                    <ListItemText primary={item.title} />
-                </ListItemButton>
+                    <ListItemButton onClick={() => navigate(`/${item.id === "home" ? "" : item.id}`)}>
+                        <ListItemIcon>
+                        {item.icon}
+                        </ListItemIcon>
+                        <ListItemText primary={item.title} />
+                    </ListItemButton>
                 </ListItem>
             ))}
             </List>
         </Drawer>
 
-        <Main open={open} sx={{ border: "1px solid red", height: "100vh", width: "100vw",}}>
+        <Main open={open} sx={{ height: "100vh", width: "100vw",}}>
             <DrawerHeader />
-            <Paper elevation={2} sx={{ height: 120 }}>
-                <TextField style={{width: "200px", height: "20px"}}/>
-            </Paper>
+            <Outlet />
         </Main>
-
-
     </Box>
     )
 }
 
-export default App
+
+const App = () => {
+
+    return (
+    <>
+    <Routes>
+        <Route path="/" element={<Navigation />}>
+        <Route index element={<HomePage />} />
+        <Route path="activities" element={<ActivitiesPage />} />
+        <Route path="sale" element={<SalePage />} />
+        <Route path="point" element={<PointPage />} />
+        {/* <Route path="*" element={<NotFoundPage />} /> */}
+        </Route>
+    </Routes>
+    </>
+)
+}
+
+export default App;
