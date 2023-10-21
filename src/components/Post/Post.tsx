@@ -1,3 +1,4 @@
+import "./Post.css";
 import { Avatar, Paper } from '@mui/material';
 import { blue, deepPurple } from '@mui/material/colors';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
@@ -5,8 +6,10 @@ import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
 import ModeCommentOutlinedIcon from '@mui/icons-material/ModeCommentOutlined';
 import IosShareOutlinedIcon from '@mui/icons-material/IosShareOutlined';
-import { Post } from '../types/Post';
+import { Post } from '../../pages/types/Post';
 import { useState } from 'react';
+import RowComponent from "../RowComponent";
+import ColumnComponent from "../ColumnComponent";
 
 type PostProps = {
   post: Post;
@@ -32,21 +35,21 @@ const Post = ({post, changePost}: PostProps) => {
     <Paper elevation={2} sx={{ height: "fit-content", width: "70%" }}>
       <div style={{ display: "flex", flexDirection: "column", padding: 15, gap: 20}}>
 
-        <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center"}}>
-          <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center"}}>
+        <RowComponent>
+          <RowComponent>
             {
               currentPost.avator ?
               <Avatar alt={currentPost.avator} src={currentPost.avator} />
               :
               <Avatar sx={{ bgcolor: deepPurple[500] }}>{currentPost.user.charAt(0)}</Avatar>
             }
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", justifyContent: "center", marginLeft: 15}}>
+            <ColumnComponent style={{ marginLeft: 15 }}>
               <span style={{ fontSize: 15, fontWeight: 600}}>{currentPost.user}</span>
               <span style={{ fontSize: 13 }}>{currentPost.location} • {currentPost.time}</span>
-            </div>
-          </div>
+            </ColumnComponent>
+          </RowComponent>
           <MoreHorizIcon style={{ cursor: "pointer" }}/>
-        </div>
+        </RowComponent>
 
         <div style={{ display: "flex", flexWrap: "wrap", gap: 20}}>
           {currentPost.photo.map((item, index) => <img src={item} alt={`${item} ${index}`} width={300} height={300}/>)}
@@ -56,40 +59,39 @@ const Post = ({post, changePost}: PostProps) => {
           {currentPost.content}
         </div>
 
-        <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center"}}>
+        <RowComponent>
           {currentPost.Liked === 0 ? 
             <span style={{ color: "#b4b8b5"}}>Be the first to react</span>
             :
             <div style={{ display: "flex", alignItems: "center", gap: 5}}><ThumbUpIcon sx={{ color: blue[500] }}/> {currentPost.Liked}</div>
           }
           
-          <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", gap: 10}}>
+          <RowComponent style={{gap: 10}}>
             {
               currentPost.youLiked ?
               <div
-                className="optionStyle" onClick={() => likeChange()}>
+                className="option-style" onClick={likeChange}>
                 <ThumbUpIcon sx={{ color: blue[500] }}/>
                 <span style={{ color: blue[500] }}>Liked</span>
               </div>
               :
-              <div className="optionStyle" onClick={() => likeChange()}>
+              <div className="option-style" onClick={likeChange}>
                 <ThumbUpOutlinedIcon />
                 Like
               </div>
             }
 
-            <div className="optionStyle">
+            <div className="option-style">
               <ModeCommentOutlinedIcon />
-              {currentPost.comments.length === 0 ? "" : ` ${currentPost.comments.length} `}
-              Comment
+              {currentPost.comments.length === 0 ? "Comment" : currentPost.comments.length === 1 ? "1 Comment" : currentPost.comments.length + ' Comments'}
             </div>
 
-            <div className="optionStyle">
+            <div className="option-style">
               <IosShareOutlinedIcon />
               Share
             </div>
-          </div>
-        </div>
+          </RowComponent>
+        </RowComponent>
       </div>
   </Paper>
   )

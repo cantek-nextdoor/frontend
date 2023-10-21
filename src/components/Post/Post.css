@@ -1,4 +1,4 @@
-.optionStyle {
+.option-style {
   display: flex;
   align-items: center;
   gap: 3px;
@@ -8,6 +8,7 @@
   padding-right: 10px;
   border-radius: 5px;
 }
-.optionStyle:hover {
+
+.option-style:hover {
   background-color: #f4f4f4;
 }

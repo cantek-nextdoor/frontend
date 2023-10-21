@@ -1,6 +1,5 @@
 import { useState } from "react";
-import "./HomePage.css";
-import Post from './Post';
+import Post from '../../components/Post/Post';
 import charityFinder from "../../assets/charityFinder.png";
 
 const postArray: Post[] = [
@@ -13,7 +12,7 @@ const postArray: Post[] = [
     content: "Can someone please recommend a good place to get a remote car starter installed on a subaru.  And what is the better unit (brand) and features to get.",
     Liked: 0,
     youLiked: false,
-    comments: [],
+    comments: ["3"],
   },
   {
     id: 1,
@@ -25,7 +24,7 @@ const postArray: Post[] = [
     content: "I’m searching for leave removal in the frond and backyard old plants removal, does anyone have any suggestions?",
     Liked: 4,
     youLiked: true,
-    comments: [""],
+    comments: ["1", "2"],
   },
 ];
 
@@ -43,7 +42,7 @@ const HomePage = () => {
   return (
     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 20, paddingBottom: 50}}>
       {
-        postList.map(item => <Post post={item} changePost={(e: Post) => postChange(e)}/>)
+        postList.map(post => <Post post={post} changePost={(e: Post) => postChange(e)}/>)
       }
     </div>
   )

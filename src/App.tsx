@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 import { Routes, Route, Outlet, useNavigate } from 'react-router-dom';
 import axios from "axios";
@@ -24,10 +24,10 @@ import HomeIcon from '@mui/icons-material/Home';
 import LocalActivityIcon from '@mui/icons-material/LocalActivity';
 import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import MilitaryTechIcon from '@mui/icons-material/MilitaryTech';
-import HomePage from './components/Home/HomePage';
-import ActivitiesPage from './components/Activities/ActivitiesPage';
-import SalePage from './components/Sale/SalePage';
-import PointPage from './components/Point/PointPage';
+import HomePage from './pages/Home/HomePage';
+import ActivitiesPage from './pages/Activities/ActivitiesPage';
+import SalePage from './pages/Sale/SalePage';
+import PointPage from './pages/Point/PointPage';
 
 type drawerItemsProps = {
     id: string,
