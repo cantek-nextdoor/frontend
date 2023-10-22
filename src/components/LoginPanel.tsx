@@ -6,13 +6,13 @@ import Link from "@mui/material/Link";
 import Box from "@mui/material/Box";
 import Avatar from "@mui/material/Avatar";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import TextField from "@mui/material/TextField";
 import ButtonMui from "../ui-components/ButtonMui.tsx";
 import Grid from "@mui/material/Grid";
 import Divider from "@mui/material/Divider";
 import CssBaseline from "@mui/material/CssBaseline";
 import {useNavigate} from "react-router-dom";
 import {loginUser, registerUser} from "../axios/auth.ts";
+import {TextFieldMui} from "../ui-components/TextFieldMui.tsx";
 
 export const LoginPanel = () => {
     const [canSeeTest, setCanSeeTest] = useState(false);
@@ -95,26 +95,11 @@ export const LoginPanel = () => {
                     {ACTION_MESSAGE}
                 </Typography>
                 <Box component="form" onSubmit={handleSubmit} noValidate sx={{mt: 1}}>
-                    <TextField
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="email"
-                        label="Email Address"
-                        name="email"
-                        autoComplete="email"
-                        autoFocus
-                    />
-                    <TextField
-                        margin="normal"
-                        required
-                        fullWidth
-                        name="password"
-                        label="Password"
-                        type="password"
-                        id="password"
-                        autoComplete="current-password"
-                    />
+
+                    <TextFieldMui autoComplete="email" label="Email Address" name="email" required size="medium"/>
+                    <TextFieldMui autoComplete="current-password" label="Password" name="password" type="password"
+                                  required size="medium"/>
+
                     {/*<FormControlLabel*/}
                     {/*  control={<Checkbox value="remember" color="primary" />}*/}
                     {/*  label="Remember me"*/}
