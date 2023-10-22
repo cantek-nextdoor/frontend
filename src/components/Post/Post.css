@@ -1,0 +1,14 @@
+.option-style {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  cursor: pointer;
+  padding: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 5px;
+}
+
+.option-style:hover {
+  background-color: #f4f4f4;
+}
