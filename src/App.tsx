@@ -1,7 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import './App.css';
 import { Routes, Route, Outlet, useNavigate } from 'react-router-dom';
-import axios from "axios";
 import { styled, useTheme, alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
@@ -162,15 +161,6 @@ const Navigation = () => {
     const handleDrawerClose = () => {
         setOpen(false);
     };
-
-    const handleFetchFromNest = async () => {
-        const res = await axios.get('/api/cats')
-        console.log('res test', res)
-    }
-
-    useEffect(() => {
-        handleFetchFromNest()
-    }, [])
 
     return (
     <Box sx={{ display: 'flex' }}>

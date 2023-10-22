@@ -1,7 +1,6 @@
 import "./Post.css";
 import { Avatar, Paper } from '@mui/material';
 import { blue, deepPurple } from '@mui/material/colors';
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
 import ModeCommentOutlinedIcon from '@mui/icons-material/ModeCommentOutlined';
@@ -10,6 +9,7 @@ import { Post } from '../../pages/types/Post';
 import { useState } from 'react';
 import RowComponent from "../RowComponent";
 import ColumnComponent from "../ColumnComponent";
+import CustomMenu from "../CustomMenu";
 
 type PostProps = {
   post: Post;
@@ -18,6 +18,7 @@ type PostProps = {
 
 const Post = ({post, changePost}: PostProps) => {
   const [currentPost, setCurrentPost] = useState(post);
+
   const likeChange = () => {
     const temp = currentPost;
       if (currentPost.youLiked) {
@@ -34,7 +35,6 @@ const Post = ({post, changePost}: PostProps) => {
     return (
     <Paper elevation={2} sx={{ height: "fit-content", width: "70%" }}>
       <div style={{ display: "flex", flexDirection: "column", padding: 15, gap: 20}}>
-
         <RowComponent>
           <RowComponent>
             {
@@ -48,7 +48,7 @@ const Post = ({post, changePost}: PostProps) => {
               <span style={{ fontSize: 13 }}>{currentPost.location} • {currentPost.time}</span>
             </ColumnComponent>
           </RowComponent>
-          <MoreHorizIcon style={{ cursor: "pointer" }}/>
+          <CustomMenu />
         </RowComponent>
 
         <div style={{ display: "flex", flexWrap: "wrap", gap: 20}}>
