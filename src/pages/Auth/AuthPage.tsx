@@ -1,12 +1,12 @@
 import Container from "@mui/material/Container";
-import { LoginPanel } from "../../components/LoginPanel.tsx";
+import {AuthPanel} from "../../components/AuthPanel.tsx";
 
 export const AuthPage = () => {
-  return (
-    <>
-      <Container component="main" maxWidth="xs">
-        <LoginPanel />
-      </Container>
-    </>
-  );
+    return (
+        <>
+            <Container component="main" maxWidth="xs">
+                <AuthPanel/>
+            </Container>
+        </>
+    );
 };

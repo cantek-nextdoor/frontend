@@ -14,7 +14,7 @@ import {useNavigate} from "react-router-dom";
 import {loginUser, registerUser} from "../axios/auth.ts";
 import {TextFieldMui} from "../ui-components/TextFieldMui.tsx";
 
-export const LoginPanel = () => {
+export const AuthPanel = () => {
     const [canSeeTest, setCanSeeTest] = useState(false);
     const [cookies] = useCookies(["access_token", "refresh_token"]);
     const [isLogin, setIsLogin] = useState(true);
