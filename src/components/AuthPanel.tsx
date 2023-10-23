@@ -1,4 +1,4 @@
-import {FormEvent, useEffect, useState} from "react";
+import {FormEvent, useState} from "react";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Avatar from "@mui/material/Avatar";
@@ -8,12 +8,11 @@ import Grid from "@mui/material/Grid";
 import Divider from "@mui/material/Divider";
 import CssBaseline from "@mui/material/CssBaseline";
 import {useNavigate} from "react-router-dom";
-import {jwtTest, loginUser, registerUser} from "../axios/auth.ts";
+import {loginUser, registerUser} from "../axios/auth.ts";
 import {TextFieldMui} from "../ui-components/TextFieldMui.tsx";
 import {useUserStore} from "../zustand/user.ts";
 
 export const AuthPanel = () => {
-    const [canSeeTest, setCanSeeTest] = useState(false);
     const [isLogin, setIsLogin] = useState(true);
 
     const navigate = useNavigate();
@@ -53,21 +52,6 @@ export const AuthPanel = () => {
         updateUser({...res.data, isLoggedIn: true})
         navigate("/");
     };
-
-
-    useEffect(() => {
-        const fetchTest = async () => {
-            try {
-                const res = await jwtTest()
-                console.log("res.data", res.data);
-                setCanSeeTest(true);
-            } catch (e) {
-                console.log("e", e);
-            }
-        };
-
-        fetchTest();
-    }, []);
 
     return (
         <div>
@@ -135,7 +119,6 @@ export const AuthPanel = () => {
             </Box>
             <Copyright/>
 
-            <div>cat content: {canSeeTest.toString()}</div>
         </div>
     );
 };
