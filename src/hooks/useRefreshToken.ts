@@ -7,6 +7,9 @@ export const useRefreshToken = () => {
     const resetUser = useUserStore((state) => state.resetUser)
 
     useEffect(() => {
+        if (!Cookies.get('access_token')) {
+            resetUser(USE_USER_STORE_DEFAULT_PROPS)
+        }
         const id = setInterval(async () => {
             try {
                 const res = await refreshUserAccessToken()
