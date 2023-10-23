@@ -30,6 +30,7 @@ import PointPage from "./pages/Point/PointPage";
 import ButtonMui from "./ui-components/ButtonMui.tsx";
 import {AuthPage} from "./pages/Auth/AuthPage.tsx";
 import {useUserStore} from "./zustand/user.ts";
+import {useRefreshToken} from "./hooks/useRefreshToken.ts";
 
 type drawerItemsProps = {
     id: string;
@@ -155,7 +156,8 @@ const Navigation = () => {
     const theme = useTheme();
     const [open, setOpen] = useState(false);
     const navigate = useNavigate();
-    const {display_name, isLoggedIn} = useUserStore((state) => state)
+    const display_name = useUserStore((state) => state.display_name)
+    const isLoggedIn = useUserStore((state) => state.isLoggedIn)
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -196,7 +198,7 @@ const Navigation = () => {
                         color="inherit"
                         component={NavLink}
                         to="/auth"
-                        text={ isLoggedIn ? display_name : "Login / Register"}
+                        text={isLoggedIn ? display_name : "Login / Register"}
                     />
                 </Toolbar>
             </AppBar>
@@ -248,6 +250,7 @@ const Navigation = () => {
 };
 
 const App = () => {
+    useRefreshToken()
 
     return (
         <>
