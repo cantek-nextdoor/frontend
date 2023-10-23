@@ -39,12 +39,12 @@ type drawerItemsProps = {
 };
 
 const drawerItems: drawerItemsProps[] = [
-{
+    {
         id: "home",
         title: "Home",
-        icon: <HomeIcon />,
-},
-{
+        icon: <HomeIcon/>,
+    },
+    {
         id: "activities",
         title: "Activities",
         icon: <LocalActivityIcon/>,
@@ -64,22 +64,22 @@ const drawerItems: drawerItemsProps[] = [
 const drawerWidth = 240;
 
 
-const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
+const Main = styled('main', {shouldForwardProp: (prop) => prop !== 'open'})<{
     open?: boolean;
-}>(({ theme, open }) => ({
+}>(({theme, open}) => ({
     flexGrow: 1,
     padding: theme.spacing(3),
     transition: theme.transitions.create('margin', {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen,
     }),
     marginLeft: `-${drawerWidth}px`,
     ...(open && {
-    transition: theme.transitions.create('margin', {
-    easing: theme.transitions.easing.easeOut,
-    duration: theme.transitions.duration.enteringScreen,
-    }),
-    marginLeft: 0,
+        transition: theme.transitions.create('margin', {
+            easing: theme.transitions.easing.easeOut,
+            duration: theme.transitions.duration.enteringScreen,
+        }),
+        marginLeft: 0,
     }),
 }));
 
@@ -157,8 +157,10 @@ const Navigation = () => {
     const theme = useTheme();
     const [open, setOpen] = useState(false);
     const navigate = useNavigate();
-    const display_name = useUserStore((state) => state.display_name)
+    const displayName = useUserStore((state) => state.displayName)
     const isLoggedIn = useUserStore((state) => state.isLoggedIn)
+
+    console.log('displayName')
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -199,7 +201,7 @@ const Navigation = () => {
                         color="inherit"
                         component={NavLink}
                         to="/auth"
-                        text={isLoggedIn ? display_name : "Login / Register"}
+                        text={isLoggedIn ? displayName : "Login / Register"}
                     />
                 </Toolbar>
             </AppBar>

@@ -8,7 +8,7 @@ export type TAuthPayload = {
 export type TAuthRes = {
     accessToken: string;
     createdAt: string;
-    display_name: string;
+    displayName: string;
     email: string;
     points: number;
     postal_code: string;

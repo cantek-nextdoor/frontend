@@ -2,7 +2,7 @@ import {create} from 'zustand'
 import {createJSONStorage, persist} from "zustand/middleware";
 
 type TUseUserStoreStateProps = {
-    display_name: string;
+    displayName: string;
     email: string;
     isLoggedIn: boolean;
     points: number;
@@ -15,7 +15,7 @@ type TUseUserStoreProps = {
 } & TUseUserStoreStateProps
 
 export const USE_USER_STORE_DEFAULT_PROPS = {
-    display_name: '',
+    displayName: '',
     email: '',
     isLoggedIn: false,
     points: 0,
