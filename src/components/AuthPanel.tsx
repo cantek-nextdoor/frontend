@@ -47,9 +47,12 @@ export const AuthPanel = () => {
         const payload = {
             email: formData.get("email")!.toString(),
             password: formData.get("password")!.toString(),
-            postalCode: formData.get("postal_code")!.toString(),
         }
-        const res = isLogin ? await loginUser(payload) : await registerUser(payload);
+        const registerPayload = {
+            ...payload,
+            postalCode: formData.get("postal_code")?.toString(),
+        }
+        const res = isLogin ? await loginUser(payload) : await registerUser(registerPayload);
         updateUser({...res.data, isLoggedIn: true})
         navigate("/");
     };
