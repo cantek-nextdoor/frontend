@@ -11,9 +11,9 @@ export type TAuthRes = {
     displayName: string;
     email: string;
     points: number;
-    postal_code: string;
+    postalCode: string;
     refreshToken: string;
     updatedAt: string;
-    user_type: string;
+    userType: string;
     uuid: string;
 } & TAbstractRes
