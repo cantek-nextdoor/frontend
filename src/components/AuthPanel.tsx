@@ -1,6 +1,5 @@
 import {FormEvent, useEffect, useState} from "react";
 import Typography from "@mui/material/Typography";
-import Link from "@mui/material/Link";
 import Box from "@mui/material/Box";
 import Avatar from "@mui/material/Avatar";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
@@ -31,9 +30,7 @@ export const AuthPanel = () => {
                 sx={{my: 4}}
             >
                 {"Copyright © "}
-                <Link color="inherit" href="https://mui.com/">
-                    Cantek NextDoor
-                </Link>{" "}
+                Cantek NextDoor{" "}
                 {new Date().getFullYear()}
                 {"."}
             </Typography>
@@ -92,7 +89,8 @@ export const AuthPanel = () => {
                 </Typography>
                 <Box component="form" onSubmit={handleSubmit} noValidate sx={{mt: 1}}>
 
-                    <TextFieldMui autoComplete="email" label="Email Address" name="email" required size="medium"/>
+                    <TextFieldMui autoComplete="email" autoFocus label="Email Address" name="email" required
+                                  size="medium"/>
                     <TextFieldMui autoComplete="current-password" label="Password" name="password" type="password"
                                   required size="medium"/>
 

@@ -17,7 +17,6 @@ export const TextFieldMui = forwardRef<any, ITextFieldMui>((props, ref) => {
             )}
             <TextField
                 autoComplete="off"
-                autoFocus
                 fullWidth
                 margin="normal"
                 inputRef={ref}
