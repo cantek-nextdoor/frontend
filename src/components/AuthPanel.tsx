@@ -47,6 +47,7 @@ export const AuthPanel = () => {
         const payload = {
             email: formData.get("email")!.toString(),
             password: formData.get("password")!.toString(),
+            postalCode: formData.get("postal_code")!.toString(),
         }
         const res = isLogin ? await loginUser(payload) : await registerUser(payload);
         updateUser({...res.data, isLoggedIn: true})
@@ -77,6 +78,8 @@ export const AuthPanel = () => {
                                   size="medium"/>
                     <TextFieldMui autoComplete="current-password" label="Password" name="password" type="password"
                                   required size="medium"/>
+                    {!isLogin && <TextFieldMui autoComplete="postal-code" label="Postal Code" name="postal_code"
+                                               required size="medium"/>}
 
                     {/*<FormControlLabel*/}
                     {/*  control={<Checkbox value="remember" color="primary" />}*/}
