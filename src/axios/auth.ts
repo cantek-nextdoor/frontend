@@ -1,5 +1,6 @@
 import axios from "axios";
+import {TAuthPayload, TAuthRes} from "../types/user.ts";
 
-// TODO: add types
-export const loginUser = (payload: any) => axios.post("/api/auth/login", payload)
-export const registerUser = (payload: any) => axios.post("/api/auth/register", payload)
+export const loginUser = (payload: TAuthPayload) => axios.post<TAuthRes>("/api/auth/login", payload)
+export const registerUser = (payload: TAuthPayload) => axios.post<TAuthRes>("/api/auth/register", payload)
+

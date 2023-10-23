@@ -48,12 +48,13 @@ export const AuthPanel = () => {
         setIsLogin((prev) => !prev);
     };
 
+    // TODO add validation
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
         const payload = {
-            email: formData.get("email"),
-            password: formData.get("password"),
+            email: formData.get("email")!.toString(),
+            password: formData.get("password")!.toString(),
         }
         const res = isLogin ? await loginUser(payload) : await registerUser(payload);
         console.log("res", res);
