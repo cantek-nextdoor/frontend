@@ -13,6 +13,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import {useNavigate} from "react-router-dom";
 import {loginUser, registerUser} from "../axios/auth.ts";
 import {TextFieldMui} from "../ui-components/TextFieldMui.tsx";
+import {useUserStore} from "../zustand/user.ts";
 
 export const AuthPanel = () => {
     const [canSeeTest, setCanSeeTest] = useState(false);
@@ -21,6 +22,8 @@ export const AuthPanel = () => {
 
     const navigate = useNavigate();
     const ACTION_MESSAGE = isLogin ? "Sign In" : "Sign Up";
+
+    const updateUser = useUserStore((state) => state.updateUser)
 
     const axiosInstance = axios.create({
         headers: {authorization: "Bearer " + cookies.access_token},
@@ -57,6 +60,7 @@ export const AuthPanel = () => {
             password: formData.get("password")!.toString(),
         }
         const res = isLogin ? await loginUser(payload) : await registerUser(payload);
+        updateUser({...res.data, isLoggedIn: true})
         console.log("res", res);
         navigate("/");
     };

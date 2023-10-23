@@ -29,6 +29,7 @@ import SalePage from "./pages/Sale/SalePage";
 import PointPage from "./pages/Point/PointPage";
 import ButtonMui from "./ui-components/ButtonMui.tsx";
 import {AuthPage} from "./pages/Auth/AuthPage.tsx";
+import {useUserStore} from "./zustand/user.ts";
 
 type drawerItemsProps = {
     id: string;
@@ -154,6 +155,7 @@ const Navigation = () => {
     const theme = useTheme();
     const [open, setOpen] = useState(false);
     const navigate = useNavigate();
+    const {display_name, isLoggedIn} = useUserStore((state) => state)
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -194,7 +196,7 @@ const Navigation = () => {
                         color="inherit"
                         component={NavLink}
                         to="/auth"
-                        text="Login / Register"
+                        text={ isLoggedIn ? display_name : "Login / Register"}
                     />
                 </Toolbar>
             </AppBar>
@@ -246,6 +248,7 @@ const Navigation = () => {
 };
 
 const App = () => {
+
     return (
         <>
             <Routes>
