@@ -6,13 +6,13 @@ export type TAuthPayload = {
 }
 
 export type TAuthRes = {
-    access_token: string;
+    accessToken: string;
     createdAt: string;
     display_name: string;
     email: string;
     points: number;
     postal_code: string;
-    refresh_token: string;
+    refreshToken: string;
     updatedAt: string;
     user_type: string;
     uuid: string;
