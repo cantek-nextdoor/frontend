@@ -54,7 +54,6 @@ export const AuthPanel = () => {
         }
         const res = isLogin ? await loginUser(payload) : await registerUser(payload);
         updateUser({...res.data, isLoggedIn: true})
-        console.log("res", res);
         navigate("/");
     };
 
