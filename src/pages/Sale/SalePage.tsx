@@ -82,7 +82,7 @@ const SalePage = () => {
           SaleItemsList.map(item => {
             const { id, title, price, photo} = item;
             return (
-              <div>
+              <div key={`${id} ${title}`}>
                 <img
                   src={photo}
                   alt={`${title} ${id}`}
