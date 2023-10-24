@@ -18,13 +18,17 @@ import dayjs from 'dayjs';
 import { v4 as uuidv4 } from 'uuid';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Chip from '@mui/material/Chip';
-
+import { createPostRequest } from "../../axios/post";
+import { status } from "../../components/entities/status";
+import { useUserStore } from "../../zustand/user";
 
 export default function PostForm() {
   const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
+  const [description, setDescription] = useState("");
   const [tagList, setTagList] = React.useState<string[]>([]);
   // const [selectedDate, setSelectedDate] = useState(null);
+
+  const userId = useUserStore((state) => state.uuid);
 
   const handleSelectChange = (event: SelectChangeEvent<typeof tagList>) => {
     const {
@@ -40,7 +44,7 @@ export default function PostForm() {
   const handleContentChange = (
     event: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
-    setContent(event.target.value); // Update content as a string
+    setDescription(event.target.value); // Update content as a string
   };
 
   const handleTitleChange = (
@@ -51,49 +55,27 @@ export default function PostForm() {
 
   const handleSubmit = (event: React.FormEvent) => { 
     event.preventDefault();
-    if (content.length <5 || title.length <5){
+    if (description.length <5 || title.length <5){
       window.alert('The title and content is less than 5 letter!.');
     } else {
     console.log("submit form!");
 
-    const testBackEndUrl = "http://localhost:3000/post";
-
     const dataToSend = {
-      userId: "05403fed-6047-447a-aa35-0be523d64783",
+      userId,
       postId: uuidv4(),
-      title: title,
+      title,
       imageUrl: "string",
-      description: content,
+      description,
       tags: tagList,
-      points: '0',
-      numOfLike: '0',
-      postedDate: today,
-      eventDate: tomorrow,
-      status: "OPEN",
+      points: 0,
+      numOfLike: 0,
+      postedDate: new Date(),
+      eventDate: new Date(),
+      status: status.open,
       likedUserList: []
     }
 
-    fetch(testBackEndUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(dataToSend),
-    })
-      .then(response => {
-        if (response.ok) {
-          return response.json(); // Parse the response JSON if needed
-        } else {
-          throw new Error('Failed to send data to the backend');
-        }
-      })
-      .then(responseData => {
-        console.log("Insert response: ",responseData)
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
-    
+    createPostRequest(dataToSend);
     }
 
   }
@@ -159,7 +141,7 @@ export default function PostForm() {
                 maxRows={6}  // Specify the maximum number of rows
                 style={{ width: '100%' , height: '50%' , maxHeight: '250px' , maxWidth: '100%' , 
                 minWidth: '100%', minHeight: '70%'}}
-                value={content}
+                value={description}
                 onChange={handleContentChange}
               />
             </Grid>
