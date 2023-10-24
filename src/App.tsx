@@ -19,43 +19,45 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import SearchIcon from '@mui/icons-material/Search';
-import HomeIcon from '@mui/icons-material/Home';
-import LocalActivityIcon from '@mui/icons-material/LocalActivity';
-import LocalOfferIcon from '@mui/icons-material/LocalOffer';
-import MilitaryTechIcon from '@mui/icons-material/MilitaryTech';
+// import HomeIcon from '@mui/icons-material/Home';
+// import LocalActivityIcon from '@mui/icons-material/LocalActivity';
+// import LocalOfferIcon from '@mui/icons-material/LocalOffer';
+// import MilitaryTechIcon from '@mui/icons-material/MilitaryTech';
 import HomePage from './pages/Home/HomePage';
 import ActivitiesPage from './pages/Activities/ActivitiesPage';
 import SalePage from './pages/Sale/SalePage';
 import PointPage from './pages/Point/PointPage';
+import PostPage from './pages/Post/PostPage';
+import { drawerItems } from './components/entities/drawerItem';
 
-type drawerItemsProps = {
-    id: string,
-    title: string,
-    icon: JSX.Element,
-};
+// type drawerItemsProps = {
+//     id: string,
+//     title: string,
+//     icon: JSX.Element,
+// };
 
-const drawerItems: drawerItemsProps[] = [
-{
-    id: "home",
-    title: "Home",
-    icon: <HomeIcon />,
-},
-{
-    id: "activities",
-    title: "Activities",
-    icon: <LocalActivityIcon />,
-},
-{
-    id: "sale",
-    title: "For Sale & Free",
-    icon: <LocalOfferIcon />,
-},
-{
-    id: "point",
-    title: "Point",
-    icon: <MilitaryTechIcon />,
-},
-];
+// const drawerItems: drawerItemsProps[] = [
+// {
+//     id: "home",
+//     title: "Home",
+//     icon: <HomeIcon />,
+// },
+// {
+//     id: "activities",
+//     title: "Activities",
+//     icon: <LocalActivityIcon />,
+// },
+// {
+//     id: "sale",
+//     title: "For Sale & Free",
+//     icon: <LocalOfferIcon />,
+// },
+// {
+//     id: "point",
+//     title: "Point",
+//     icon: <MilitaryTechIcon />,
+// },
+// ];
 
 const drawerWidth = 240;
 
@@ -242,6 +244,7 @@ const App = () => {
         <Route path="activities" element={<ActivitiesPage />} />
         <Route path="sale" element={<SalePage />} />
         <Route path="point" element={<PointPage />} />
+        <Route path="post" element={<PostPage />} />
         {/* <Route path="*" element={<NotFoundPage />} /> */}
         </Route>
     </Routes>
