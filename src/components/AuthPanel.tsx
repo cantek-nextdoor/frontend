@@ -23,8 +23,9 @@ export const AuthPanel = () => {
 
     const enum errorMessages {
         WRONG_EMAIL = "Wrong Email Address",
+        WRONG_PASSWORD = "Password must be at least 8 characters long, contain at least one letter and one number",
         MISMATCH_PWD = "Passwords are not the same",
-        INVALID_POSTAL_CODE = "Postal Code is invalid, use A#A #A#",
+        INVALID_POSTAL_CODE = "Postal Code is invalid, use either A#A #A# or A#A-#A# or A#A#A# format",
         NOT_AUTHORIZED = "Email or Password is invalid",
         REQUIRED = "Please fill up required fields"
     }
@@ -69,7 +70,7 @@ export const AuthPanel = () => {
 
     // Check if postal code is valid format during onChange
     const validatePostalCode = (input:string) => {
-        const canadianPostalCodeRegex = /^[A-Z]\d[A-Z] \d[A-Z]\d$/;
+        const canadianPostalCodeRegex =  /^[ABCEGHJ-NPRSTVXY]\d[ABCEGHJ-NPRSTV-Z][ -]?\d[ABCEGHJ-NPRSTV-Z]\d$/;
         if (!canadianPostalCodeRegex.test(input))
         {
             setErrorMessage(errorMessages.INVALID_POSTAL_CODE);
@@ -79,18 +80,34 @@ export const AuthPanel = () => {
     }
 
     // Check if password and confirm password are the same
-    const validatePassword = (input:string) => {
+    const validateConfirmPassword = (input:string) => {
         if(password != input)
         {
             setErrorMessage(errorMessages.MISMATCH_PWD);
             return;
         }
-        setErrorMessage("");
+        //only check if password is valid during user registration
+        validatePassword(input);
     }
 
+    const validatePassword = (input:string) => {
+        const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,}$/;
+        if (!passwordRegex.test(input))
+        {
+            setErrorMessage(errorMessages.WRONG_PASSWORD);
+            return;
+        }
+        setErrorMessage("");
+    }
     // Store Password on state for checking (during registration)
-    const savePassword = (input:string) => {
+    const saveAndValidatePassword = (input:string) => {
         setPassword(input);
+        if(isLogin)
+        {
+            return;
+        }
+        //only check if password is valid during user registration
+        validatePassword(input);
     }
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -124,6 +141,12 @@ export const AuthPanel = () => {
                 setErrorMessage(errorMessages.REQUIRED);
                 return;
             }
+            validatePassword(inputPassword);
+        }
+
+        if(errorMessage != "")
+        {
+            return;
         }
         const res = isLogin ? await loginUser(payload) : await registerUser(registerPayload);
         if(res == null)
@@ -157,10 +180,10 @@ export const AuthPanel = () => {
 
                     <TextFieldMui autoComplete="email" error={errorMessage==errorMessages.WRONG_EMAIL || errorMessage==errorMessages.REQUIRED } autoFocus label="Email Address" name="email" required
                                   size="medium" onChange={(e)=>validateEmail(e.target.value)}/>
-                    <TextFieldMui autoComplete="current-password"  error={errorMessage==errorMessages.REQUIRED } label="Password" name="password" type="password"
-                                  required size="medium" onChange={(e)=>savePassword(e.target.value)} />
-                    {!isLogin && <TextFieldMui autoComplete="confirm-password" label="Confirm Password" name="confirmPassword" type="password"
-                                  error={errorMessage==errorMessages.MISMATCH_PWD || errorMessage==errorMessages.REQUIRED} required size="medium" onChange={(e)=>validatePassword(e.target.value)}/>}
+                    <TextFieldMui autoComplete="current-password"  error={errorMessage==errorMessages.WRONG_PASSWORD || errorMessage==errorMessages.REQUIRED } label="Password" name="password" type="password"
+                                  required size="medium" onChange={(e)=>saveAndValidatePassword(e.target.value)} />
+                    {!isLogin && <TextFieldMui autoComplete="confirm-password" label="Confirm Password" name="confirm_password" type="password"
+                                  error={errorMessage==errorMessages.MISMATCH_PWD || errorMessage==errorMessages.REQUIRED} required size="medium" onChange={(e)=>validateConfirmPassword(e.target.value)}/>}
                     {!isLogin && <TextFieldMui autoComplete="postal-code" label="Postal Code" name="postal_code"
                                   error={errorMessage==errorMessages.INVALID_POSTAL_CODE || errorMessage==errorMessages.REQUIRED} required size="medium" onChange={(e)=>validatePostalCode(e.target.value)}/>}
                     {errorMessage && <FormHelperText error>{errorMessage}</FormHelperText>}
