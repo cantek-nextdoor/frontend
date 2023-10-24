@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import './App.css';
-import { Routes, Route, Outlet, useNavigate } from 'react-router-dom';
+import { NavLink, Outlet, Route, Routes, useNavigate} from "react-router-dom";
 import { styled, useTheme, alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
@@ -19,10 +19,6 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import SearchIcon from '@mui/icons-material/Search';
-// import HomeIcon from '@mui/icons-material/Home';
-// import LocalActivityIcon from '@mui/icons-material/LocalActivity';
-// import LocalOfferIcon from '@mui/icons-material/LocalOffer';
-// import MilitaryTechIcon from '@mui/icons-material/MilitaryTech';
 import HomePage from './pages/Home/HomePage';
 import ActivitiesPage from './pages/Activities/ActivitiesPage';
 import SalePage from './pages/Sale/SalePage';
@@ -33,36 +29,6 @@ import ButtonMui from "./ui-components/ButtonMui.tsx";
 import {AuthPage} from "./pages/Auth/AuthPage.tsx";
 import {useUserStore} from "./zustand/user.ts";
 import {useRefreshToken} from "./hooks/useRefreshToken.ts";
-
-// type drawerItemsProps = {
-//     id: string,
-//     title: string,
-//     icon: JSX.Element,
-// };
-
-// const drawerItems: drawerItemsProps[] = [
-// {
-//     id: "home",
-//     title: "Home",
-//     icon: <HomeIcon />,
-// },
-// {
-//     id: "activities",
-//     title: "Activities",
-//     icon: <LocalActivityIcon />,
-// },
-// {
-//     id: "sale",
-//     title: "For Sale & Free",
-//     icon: <LocalOfferIcon />,
-// },
-// {
-//     id: "point",
-//     title: "Point",
-//     icon: <MilitaryTechIcon />,
-// },
-// ];
-
 
 const drawerWidth = 240;
 

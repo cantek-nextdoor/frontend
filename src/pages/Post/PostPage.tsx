@@ -7,8 +7,7 @@ import Paper from "@mui/material/Paper";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import { SelectChangeEvent } from "@mui/material/Select"; 
+import Select, { SelectChangeEvent } from "@mui/material/Select"; 
 import UploadFileIcon from "@mui/icons-material/UploadFile";
 import Button from "@mui/material/Button";
 import TextareaAutosize from '@mui/material/TextareaAutosize';
@@ -16,24 +15,26 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from 'dayjs';
+import { v4 as uuidv4 } from 'uuid';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import Chip from '@mui/material/Chip';
 
 
 export default function PostForm() {
-  const [tag, setTag] = useState<"" | { value: string }>("");
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [tagList, setTagList] = React.useState<string[]>([]);
   // const [selectedDate, setSelectedDate] = useState(null);
 
-  // const handleDateChange = (date: Date) => {
-  //   setSelectedDate(date);
-  // };
-
-  const handleSelectChange = (
-    event: SelectChangeEvent<{ name?: string | undefined; value: unknown }>
-  ) => {
-    setTag(event.target.value as "" | { value: string });
+  const handleSelectChange = (event: SelectChangeEvent<typeof tagList>) => {
+    const {
+      target: { value },
+    } = event;
+    setTagList(
+      // On autofill we get a stringified value.
+      typeof value === 'string' ? value.split(',') : value,
+    );
   };
-
 
 
   const handleContentChange = (
@@ -55,21 +56,43 @@ export default function PostForm() {
     } else {
     console.log("submit form!");
 
-    // const data = {
-    //   userId: "05403fed-6047-447a-aa35-0be523d64783",
-    //   // postId: string;
-    //   // title: string;
-    //   // imageUrl: string;
-    //   // description: string;
-    //   // tags: string[];
-    //   // points: number;
-    //   // userId: string;
-    //   // numOfLike: number;
-    //   postedDate: new Date(),
-    //   eventDate: new Date(),
-    //   status: "OPEN",
-    //   likedUserList: [],
-    // }
+    const testBackEndUrl = "http://localhost:3000/post";
+
+    const dataToSend = {
+      userId: "05403fed-6047-447a-aa35-0be523d64783",
+      postId: uuidv4(),
+      title: title,
+      imageUrl: "string",
+      description: content,
+      tags: tagList,
+      points: '0',
+      numOfLike: '0',
+      postedDate: today,
+      eventDate: tomorrow,
+      status: "OPEN",
+      likedUserList: []
+    }
+
+    fetch(testBackEndUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(dataToSend),
+    })
+      .then(response => {
+        if (response.ok) {
+          return response.json(); // Parse the response JSON if needed
+        } else {
+          throw new Error('Failed to send data to the backend');
+        }
+      })
+      .then(responseData => {
+        console.log("Insert response: ",responseData)
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
     
     }
 
@@ -193,20 +216,30 @@ export default function PostForm() {
             <Grid item xs={12} sm={4}>
               <FormControl fullWidth size="small">
                 <InputLabel id="demo-simple-select-label">Tag</InputLabel>
-                <Select
-                  required
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value={tag}
-                  label="Tag"
-                  onChange={handleSelectChange}
-                > 
-                  {categories.map((item) => (
-                  <MenuItem key={item} value={item}>
-                    {item}
-                  </MenuItem>
-                  ))}
-                </Select>
+                        <Select
+          labelId="demo-multiple-chip-label"
+          id="demo-multiple-chip"
+          multiple
+          value={tagList}
+          onChange={handleSelectChange}
+          input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+          renderValue={(selected) => (
+            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+              {selected.map((value) => (
+                <Chip key={value} label={value} />
+              ))}
+            </Box>
+          )}
+        >
+          {categories.map((tag) => (
+            <MenuItem
+              key={tag}
+              value={tag}
+            >
+              {tag}
+            </MenuItem>
+          ))}
+        </Select>
               </FormControl>
             </Grid>
             <Grid item xs={12} sm={4} sx={{ display: 'flex', justifyContent: 'center'}}>
