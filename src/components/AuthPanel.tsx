@@ -16,7 +16,7 @@ import { FormHelperText } from "@mui/material";
 export const AuthPanel = () => {
     const [isLogin, setIsLogin] = useState(true);
     const [password, setPassword]  = useState("");
-    const [errorMessage, setError] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
 
     const navigate = useNavigate();
     const ACTION_MESSAGE = isLogin ? "Sign In" : "Sign Up";
@@ -52,7 +52,7 @@ export const AuthPanel = () => {
         if (errorMessage != errorMessages.WRONG_EMAIL)
         {
             // cleanup error message for invalid postal code and mismatch pwd
-            setError("");
+            setErrorMessage("");
         }
     };
 
@@ -61,10 +61,10 @@ export const AuthPanel = () => {
         const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         if (!emailRegex.test(input))
         {
-            setError(errorMessages.WRONG_EMAIL);
+            setErrorMessage(errorMessages.WRONG_EMAIL);
             return;
         }
-        setError("");
+        setErrorMessage("");
     }
 
     // Check if postal code is valid format during onChange
@@ -72,20 +72,20 @@ export const AuthPanel = () => {
         const canadianPostalCodeRegex = /^[A-Z]\d[A-Z] \d[A-Z]\d$/;
         if (!canadianPostalCodeRegex.test(input))
         {
-            setError(errorMessages.INVALID_POSTAL_CODE);
+            setErrorMessage(errorMessages.INVALID_POSTAL_CODE);
             return;
         }
-        setError("");
+        setErrorMessage("");
     }
 
     // Check if password and confirm password are the same
     const validatePassword = (input:string) => {
         if(password != input)
         {
-            setError(errorMessages.MISMATCH_PWD);
+            setErrorMessage(errorMessages.MISMATCH_PWD);
             return;
         }
-        setError("");
+        setErrorMessage("");
     }
 
     // Store Password on state for checking (during registration)
@@ -101,7 +101,7 @@ export const AuthPanel = () => {
         
         if(inputEmail == "" || inputPassword == "")
         {
-            setError(errorMessages.REQUIRED);
+            setErrorMessage(errorMessages.REQUIRED);
             return;
         }
         if (errorMessage != "")
@@ -121,14 +121,14 @@ export const AuthPanel = () => {
             const confirmPwd = formData.get("confirm_password")?.toString();
             if(registerPayload.postalCode == "" || confirmPwd == undefined || confirmPwd == "")
             {
-                setError(errorMessages.REQUIRED);
+                setErrorMessage(errorMessages.REQUIRED);
                 return;
             }
         }
         const res = isLogin ? await loginUser(payload) : await registerUser(registerPayload);
         if(res == null)
         {
-            setError("Login Failed");
+            setErrorMessage("Login Failed");
             return;
         }
         updateUser({...res.data, isLoggedIn: true})
