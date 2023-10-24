@@ -27,6 +27,8 @@ import HomePage from './pages/Home/HomePage';
 import ActivitiesPage from './pages/Activities/ActivitiesPage';
 import SalePage from './pages/Sale/SalePage';
 import PointPage from './pages/Point/PointPage';
+import SaleItemDetailPage from './pages/Sale/SaleItemDetailPage';
+import NotFoundPage from './pages/NotFoundPage';
 
 type drawerItemsProps = {
     id: string,
@@ -212,7 +214,12 @@ const Navigation = () => {
             <List>
             {drawerItems.map((item) => (
                 <ListItem key={item.id} disablePadding>
-                    <ListItemButton onClick={() => navigate(`/${item.id === "home" ? "" : item.id}`)}>
+                    <ListItemButton
+                        onClick={() => {
+                            navigate(`/${item.id === "home" ? "" : item.id}`);
+                            handleDrawerClose();
+                        }}
+                    >
                         <ListItemIcon>
                         {item.icon}
                         </ListItemIcon>
@@ -241,8 +248,9 @@ const App = () => {
         <Route index element={<HomePage />} />
         <Route path="activities" element={<ActivitiesPage />} />
         <Route path="sale" element={<SalePage />} />
+        <Route path="itemDetail/:id" element={<SaleItemDetailPage />} />
         <Route path="point" element={<PointPage />} />
-        {/* <Route path="*" element={<NotFoundPage />} /> */}
+        <Route path="*" element={<NotFoundPage />} />
         </Route>
     </Routes>
     </>
