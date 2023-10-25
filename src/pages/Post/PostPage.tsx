@@ -20,6 +20,7 @@ import Chip from '@mui/material/Chip';
 import { createPostRequest } from "../../axios/post";
 import { status } from "../../components/entities/status";
 import { useUserStore } from "../../zustand/user";
+import { tags } from "../../components/entities/tags";
 
 export default function PostForm() {
   const [title, setTitle] = useState("");
@@ -80,12 +81,6 @@ export default function PostForm() {
   const today = dayjs();
   const tomorrow = dayjs().add(1,'day');
 
-  const categories = [
-    "seek help",
-    "exchange stuff",
-    "provide help",
-    "activity",
-  ];
 
   return (
     <form onSubmit={handleSubmit} >
@@ -192,7 +187,7 @@ export default function PostForm() {
             </Box>
           )}
         >
-          {categories.map((tag) => (
+          {tags.map((tag) => (
             <MenuItem
               key={tag}
               value={tag}

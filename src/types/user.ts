@@ -5,6 +5,7 @@ export type TAuthPayload = {
     password: string;
 }
 
+
 export type TAuthRes = {
     accessToken: string;
     createdAt: string;
