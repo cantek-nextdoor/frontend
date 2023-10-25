@@ -8,7 +8,6 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select"; 
-import UploadFileIcon from "@mui/icons-material/UploadFile";
 import Button from "@mui/material/Button";
 import TextareaAutosize from '@mui/material/TextareaAutosize';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -26,7 +25,6 @@ export default function PostForm() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [tagList, setTagList] = React.useState<string[]>([]);
-  // const [selectedDate, setSelectedDate] = useState(null);
 
   const userId = useUserStore((state) => state.uuid);
 
@@ -35,7 +33,6 @@ export default function PostForm() {
       target: { value },
     } = event;
     setTagList(
-      // On autofill we get a stringified value.
       typeof value === 'string' ? value.split(',') : value,
     );
   };
@@ -91,7 +88,7 @@ export default function PostForm() {
   ];
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} >
       <Paper elevation={3} sx={{ marginRight: "15%", marginLeft: "15%" }}>
         <Box sx={{ padding: 5 }}>
           <Grid container spacing={3}>
@@ -145,7 +142,7 @@ export default function PostForm() {
                 onChange={handleContentChange}
               />
             </Grid>
-
+            <Grid item xs={12} sm={2}>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DatePicker
                 label="Select a start date"
@@ -164,25 +161,7 @@ export default function PostForm() {
                 disablePast
               />
             </LocalizationProvider>
-
-            <Grid item xs={12} sm={2}>
-              <InputLabel
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  fontWeight: 700
-                }}
-              >
-                Img Upload
-              </InputLabel>
             </Grid>
-
-            <Grid item xs={12} sm={3}>
-              <Button>
-                <UploadFileIcon />
-              </Button>
-            </Grid>
-
             <Grid item xs={12} sm={2}>
               <InputLabel
                 sx={{
