@@ -28,15 +28,23 @@ const HomePage = () => {
       return item;
     });
     setPostList(tempArray);
-  }
+  };
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 20, paddingBottom: 50}}>
-      {
-        postList.map(post => <Post post={post} changePost={(e: Post) => postChange(e)}/>)
-      }
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        gap: 20,
+        paddingBottom: 50,
+      }}
+    >
+      {postList.map((post) => (
+        <Post post={post} changePost={(e: Post) => postChange(e)} />
+      ))}
     </div>
-  )
-}
+  );
+};
 
 export default HomePage;
