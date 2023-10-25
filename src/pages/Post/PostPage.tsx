@@ -76,6 +76,7 @@ export default function PostForm() {
   const tomorrow = dayjs().add(1,'day');
 
 
+
   return (
     <form onSubmit={handleSubmit}>
       <Paper elevation={3} sx={{ marginRight: "15%", marginLeft: "15%" }}>
@@ -172,7 +173,8 @@ export default function PostForm() {
             <Grid item xs={12} sm={4}>
               <FormControl fullWidth size="small">
                 <InputLabel id="demo-simple-select-label">Tag</InputLabel>
-                        <Select
+
+         <Select
           labelId="demo-multiple-chip-label"
           id="demo-multiple-chip"
           multiple
@@ -196,6 +198,7 @@ export default function PostForm() {
             </MenuItem>
           ))}
         </Select>
+
               </FormControl>
             </Grid>
             <Grid
