@@ -1,3 +1,3 @@
 import { accessInstance } from "./index.ts";
 
-export const getAllPostRequest = () => accessInstance.get("/api/post/searchPosts/all");
+export const getAllPostRequest = () => accessInstance.get("/api/post/all");
