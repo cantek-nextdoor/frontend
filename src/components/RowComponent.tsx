@@ -7,7 +7,14 @@ type RowComponentProps = {
 
 const RowComponent = ({style, children}: RowComponentProps) => {
   return (
-    <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center", ...style}}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: style?.justifyContent ?? "space-between",
+        alignItems: style?.alignItems ?? "center",
+        ...style
+      }}>
       {children}
     </div>
   )
