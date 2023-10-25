@@ -1,11 +1,7 @@
 import axios from "axios";
 import {TAuthPayload, TAuthRes} from "../types/user.ts";
 import Cookies from 'js-cookie';
-
-const accessInstance = axios.create({
-        headers: {authorization: "Bearer " + Cookies.get('accessToken')}
-    }
-)
+import { accessInstance } from "./index.ts";
 
 const refreshInstance = axios.create({
         headers: {authorization: "Bearer " + Cookies.get('refreshToken')}

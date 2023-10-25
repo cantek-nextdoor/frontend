@@ -1,66 +1,35 @@
-import {useState} from "react";
-import "./App.css";
+import {useState} from 'react';
+import './App.css';
 import {NavLink, Outlet, Route, Routes, useNavigate} from "react-router-dom";
-import {alpha, styled, useTheme} from "@mui/material/styles";
-import Box from "@mui/material/Box";
-import Drawer from "@mui/material/Drawer";
-import MuiAppBar, {AppBarProps as MuiAppBarProps} from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import CssBaseline from "@mui/material/CssBaseline";
-import InputBase from "@mui/material/InputBase";
-import List from "@mui/material/List";
-import Divider from "@mui/material/Divider";
-import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import SearchIcon from "@mui/icons-material/Search";
-import HomeIcon from "@mui/icons-material/Home";
-import LocalActivityIcon from "@mui/icons-material/LocalActivity";
-import LocalOfferIcon from "@mui/icons-material/LocalOffer";
-import MilitaryTechIcon from "@mui/icons-material/MilitaryTech";
-import HomePage from "./pages/Home/HomePage";
-import ActivitiesPage from "./pages/Activities/ActivitiesPage";
-import SalePage from "./pages/Sale/SalePage";
-import PointPage from "./pages/Point/PointPage";
+import {alpha, styled, useTheme} from '@mui/material/styles';
+import Box from '@mui/material/Box';
+import Drawer from '@mui/material/Drawer';
+import MuiAppBar, {AppBarProps as MuiAppBarProps} from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import CssBaseline from '@mui/material/CssBaseline';
+import InputBase from '@mui/material/InputBase';
+import List from '@mui/material/List';
+import Divider from '@mui/material/Divider';
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import SearchIcon from '@mui/icons-material/Search';
+import HomePage from './pages/Home/HomePage';
+import ActivitiesPage from './pages/Activities/ActivitiesPage';
+import SalePage from './pages/Sale/SalePage';
+import PointPage from './pages/Point/PointPage';
+import {drawerItems} from './components/entities/drawerItem';
 import ButtonMui from "./ui-components/ButtonMui.tsx";
 import {AuthPage} from "./pages/Auth/AuthPage.tsx";
 import {useUserStore} from "./zustand/user.ts";
 import SaleItemDetailPage from "./pages/Sale/SaleItemDetailPage.tsx";
 import NotFoundPage from "./pages/NotFoundPage";
-
-type drawerItemsProps = {
-    id: string;
-    title: string;
-    icon: JSX.Element;
-};
-
-const drawerItems: drawerItemsProps[] = [
-    {
-        id: "home",
-        title: "Home",
-        icon: <HomeIcon/>,
-    },
-    {
-        id: "activities",
-        title: "Activities",
-        icon: <LocalActivityIcon/>,
-    },
-    {
-        id: "sale",
-        title: "For Sale & Free",
-        icon: <LocalOfferIcon/>,
-    },
-    {
-        id: "point",
-        title: "Point",
-        icon: <MilitaryTechIcon/>,
-    },
-];
+import PostPage from './pages/Post/PostPage';
 
 const drawerWidth = 240;
 
@@ -256,6 +225,7 @@ const Navigation = () => {
 const App = () => {
 
     return (
+
         <>
             <Routes>
                 <Route path="/" element={<Navigation/>}>
@@ -265,6 +235,7 @@ const App = () => {
                     <Route path="sale" element={<SalePage/>}/>
                     <Route path="itemDetail/:id" element={<SaleItemDetailPage/>}/>
                     <Route path="point" element={<PointPage/>}/>
+                    <Route path="post" element={<PostPage/>}/>
                     <Route path="*" element={<NotFoundPage/>}/>
                 </Route>
             </Routes>
