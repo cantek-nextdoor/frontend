@@ -41,7 +41,7 @@ const HomePage = () => {
       }}
     >
       {postList.map((post) => (
-        <Post post={post} changePost={(e: Post) => postChange(e)} />
+        <Post post={post} changePost={(e: Post) => postChange(e)} key ={post.postId}/>
       ))}
     </div>
   );
