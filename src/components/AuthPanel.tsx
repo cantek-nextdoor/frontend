@@ -148,14 +148,15 @@ export const AuthPanel = () => {
         {
             return;
         }
-        const res = isLogin ? await loginUser(payload) : await registerUser(registerPayload);
-        if(res == null)
-        {
-            setErrorMessage("Login Failed");
-            return;
+        try {
+            const res = isLogin ? await loginUser(payload) : await registerUser(registerPayload);
+            updateUser({...res.data, isLoggedIn: true})
+            navigate("/");
+        } catch (e){
+            console.log(e)
+             setErrorMessage("Login Failed");
+             return;
         }
-        updateUser({...res.data, isLoggedIn: true})
-        navigate("/");
     };
 
     return (
