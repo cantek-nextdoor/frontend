@@ -33,16 +33,24 @@ function MyComponent() {
     setMap(null)
   }, [])
 
+  const setMarker = React.useCallback(function callback(ev) {
+      console.log("latitide = ", ev.latLng.lat());
+      console.log("longitude = ", ev.latLng.lng());
+      // TODO: Add box that allows creation of events
+  }, [])
+
   return isLoaded ? (
+      <>
       <GoogleMap
         mapContainerStyle={containerStyle}
         zoom={5}
         onLoad={onLoad}
         onUnmount={onUnmount}
+        onClick={setMarker}
       >
         { /* Child components, such as markers, info windows, etc. */ }
-        <></>
       </GoogleMap>
+      </>
   ) : <></>
 }
 
