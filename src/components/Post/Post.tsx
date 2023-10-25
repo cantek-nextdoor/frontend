@@ -1,12 +1,12 @@
 import "./Post.css";
-import { Avatar, Paper } from '@mui/material';
-import { blue, deepPurple } from '@mui/material/colors';
+import {Avatar, Paper} from '@mui/material';
+import {blue, deepPurple} from '@mui/material/colors';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
 // import ModeCommentOutlinedIcon from '@mui/icons-material/ModeCommentOutlined';
 import IosShareOutlinedIcon from '@mui/icons-material/IosShareOutlined';
-import { Post } from '../../pages/types/Post';
-import { useState } from 'react';
+import {Post} from '../../pages/types/Post';
+import {useState} from 'react';
 import RowComponent from "../RowComponent";
 import ColumnComponent from "../ColumnComponent";
 import CustomMenu from "../CustomMenu";
@@ -15,8 +15,8 @@ import { getUserDetailRequest } from "../../axios/user";
 
 
 type PostProps = {
-  post: Post;
-  changePost: (inputPost: Post) => void;
+    post: Post;
+    changePost: (inputPost: Post) => void;
 }
 
 const Post = ({post, changePost}: PostProps) => {
@@ -106,15 +106,15 @@ getUserDetailRequest(apiUrl)
               {currentPost.comments.length === 0 ? "Comment" : currentPost.comments.length === 1 ? "1 Comment" : currentPost.comments.length + ' Comments'}
             </div> */}
 
-            <div className="option-style">
-              <IosShareOutlinedIcon />
-              Share
+                        <div className="option-style">
+                            <IosShareOutlinedIcon/>
+                            Share
+                        </div>
+                    </RowComponent>
+                </RowComponent>
             </div>
-          </RowComponent>
-        </RowComponent>
-      </div>
-  </Paper>
-  )
+        </Paper>
+    )
 }
 
 export default Post;

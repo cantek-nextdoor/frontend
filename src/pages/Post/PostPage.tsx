@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
+import {useState} from "react";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
@@ -7,20 +7,19 @@ import Paper from "@mui/material/Paper";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
+import Select, {SelectChangeEvent} from "@mui/material/Select";
 import Button from "@mui/material/Button";
-import TextareaAutosize from "@mui/material/TextareaAutosize";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs from "dayjs";
-import { v4 as uuidv4 } from "uuid";
+import {v4 as uuidv4} from "uuid";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import Chip from "@mui/material/Chip";
-import { createPostRequest } from "../../axios/post";
-import { status } from "../../components/entities/status";
-import { useUserStore } from "../../zustand/user";
-import { tags } from "../../components/entities/tags";
+import {createPostRequest} from "../../axios/post";
+import {status} from "../../components/entities/status";
+import {useUserStore} from "../../zustand/user";
+import {tags} from "../../components/entities/tags";
+import {LocalizationProvider} from "@mui/x-date-pickers/LocalizationProvider";
+import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
+import {DatePicker} from "@mui/x-date-pickers/DatePicker";
 
 export default function PostForm() {
   const [title, setTitle] = useState("");
@@ -220,4 +219,5 @@ export default function PostForm() {
       </Paper>
     </form>
   );
+
 }
