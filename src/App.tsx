@@ -30,7 +30,6 @@ import PointPage from "./pages/Point/PointPage";
 import ButtonMui from "./ui-components/ButtonMui.tsx";
 import {AuthPage} from "./pages/Auth/AuthPage.tsx";
 import {useUserStore} from "./zustand/user.ts";
-import {useRefreshToken} from "./hooks/useRefreshToken.ts";
 import SaleItemDetailPage from "./pages/Sale/SaleItemDetailPage.tsx";
 import NotFoundPage from "./pages/NotFoundPage";
 
@@ -255,23 +254,22 @@ const Navigation = () => {
 };
 
 const App = () => {
-    useRefreshToken()
 
     return (
-    <>
-    <Routes>
-        <Route path="/" element={<Navigation />}>
-            <Route index element={<HomePage />} />
-            <Route path="activities" element={<ActivitiesPage />} />
-            <Route path="auth" element={<AuthPage/>}/>
-            <Route path="sale" element={<SalePage />} />
-            <Route path="itemDetail/:id" element={<SaleItemDetailPage />} />
-            <Route path="point" element={<PointPage />} />
-            <Route path="*" element={<NotFoundPage />} />
-        </Route>
-    </Routes>
-    </>
-)
+        <>
+            <Routes>
+                <Route path="/" element={<Navigation/>}>
+                    <Route index element={<HomePage/>}/>
+                    <Route path="activities" element={<ActivitiesPage/>}/>
+                    <Route path="auth" element={<AuthPage/>}/>
+                    <Route path="sale" element={<SalePage/>}/>
+                    <Route path="itemDetail/:id" element={<SaleItemDetailPage/>}/>
+                    <Route path="point" element={<PointPage/>}/>
+                    <Route path="*" element={<NotFoundPage/>}/>
+                </Route>
+            </Routes>
+        </>
+    )
 }
 
 export default App;
