@@ -23,6 +23,7 @@ import HomeIcon from "@mui/icons-material/Home";
 import LocalActivityIcon from "@mui/icons-material/LocalActivity";
 import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 import MilitaryTechIcon from "@mui/icons-material/MilitaryTech";
+import EventIcon from '@mui/icons-material/Event';
 import HomePage from "./pages/Home/HomePage";
 import ActivitiesPage from "./pages/Activities/ActivitiesPage";
 import SalePage from "./pages/Sale/SalePage";
@@ -33,6 +34,7 @@ import {useUserStore} from "./zustand/user.ts";
 import {useRefreshToken} from "./hooks/useRefreshToken.ts";
 import SaleItemDetailPage from "./pages/Sale/SaleItemDetailPage.tsx";
 import NotFoundPage from "./pages/NotFoundPage";
+import { EventsPage } from "./pages/Events/EventsPage.tsx";
 
 type drawerItemsProps = {
     id: string;
@@ -50,6 +52,11 @@ const drawerItems: drawerItemsProps[] = [
         id: "activities",
         title: "Activities",
         icon: <LocalActivityIcon/>,
+    },
+        {
+        id: "events",
+        title: "Events",
+        icon: <EventIcon/>,
     },
     {
         id: "sale",
@@ -264,6 +271,7 @@ const App = () => {
             <Route index element={<HomePage />} />
             <Route path="activities" element={<ActivitiesPage />} />
             <Route path="auth" element={<AuthPage/>}/>
+            <Route path="events" element={<EventsPage />} />
             <Route path="sale" element={<SalePage />} />
             <Route path="itemDetail/:id" element={<SaleItemDetailPage />} />
             <Route path="point" element={<PointPage />} />
