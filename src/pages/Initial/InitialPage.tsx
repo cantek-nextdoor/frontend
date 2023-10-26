@@ -1,3 +1,4 @@
+import "./initialPage.css";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
 import BackgroundPhoto from "../../assets/InitialPage.jpg";
@@ -14,9 +15,9 @@ const InitialPage = () => {
           left: "5%",
           top: "0",
       }}>
-        <span style={{ fontSize: 70, fontWeight: 800 }}>NextDoor - A Virtual Neighbourhood</span>
+        <span className="title">NextDoor - A Virtual Neighbourhood</span>
         <ColumnComponent style={{ gap: 20 }}>
-          <span style={{ fontSize: 30, fontWeight: 400 }}>Connect with the people living near you</span>
+          <span className="desc">Connect with the people living near you</span>
           <Button
             variant="contained"
             size="large"
