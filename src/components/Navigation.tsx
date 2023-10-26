@@ -1,5 +1,5 @@
 import {useTheme} from "@mui/material/styles";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {NavLink, Outlet, useNavigate} from "react-router-dom";
 import {useUserStore} from "../zustand/user.ts";
 import Box from "@mui/material/Box";
@@ -40,6 +40,12 @@ export const Navigation = () => {
     const points = useUserStore((state) => state.points)
 
     const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+
+    useEffect( () => {
+        if (!isLoggedIn){
+            navigate("/");
+        }
+    }, [])
 
     const handleDrawerOpen = () => {
         setOpen(true);
