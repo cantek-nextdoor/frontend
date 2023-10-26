@@ -5,28 +5,62 @@ import RowComponent from "./RowComponent";
 import {deepPurple} from "@mui/material/colors";
 import {createExchange} from "../axios/transaction.ts";
 import ButtonMui from "../ui-components/ButtonMui.tsx";
+import {AlertMui} from "../ui-components/AlertMui.tsx";
+import {useState} from "react";
+import {getUserDetail} from "../axios/user.ts";
+import {useUserStore} from "../zustand/user.ts";
 
 type SaleItemDetailProps = {
     currentItem: SaleItem;
 }
 
-const handleExchange = async () => {
-    try {
-        // TODO fetch data from posts
-        const res = await createExchange({
-            counterparty: '3521047a-cf6b-404a-a356-5ac920b1391d',
-            isCurrentUserSender: false,
-            postId: 1
-        })
-        console.log('res.data', res.data)
-    } catch (e) {
-        console.log('handleExchange error', e)
-    }
-}
-
 const SaleItemDetail = ({currentItem}: SaleItemDetailProps) => {
+
+    const [isAlertOpen, setIsAlertOpen] = useState(false)
+    const [isSuccess, setIsSuccess] = useState(false)
+    const [alertMessage, setAlertMessage] = useState("")
+    const uuid = useUserStore((state) => state.uuid)
+    const updateUser = useUserStore((state) => state.updateUser)
+
+    const handleExchange = async () => {
+        try {
+            // TODO fetch data from posts
+            await createExchange({
+                counterparty: '3521047a-cf6b-404a-a356-5ac920b1391d',
+                isCurrentUserSender: false,
+                postId: 1
+            })
+
+            const res = await getUserDetail(uuid)
+            const updatedUser = res.data
+            updateUser({
+                email: updatedUser.email,
+                points: updatedUser.points,
+                displayName: updatedUser.displayName,
+                uuid: updatedUser.uuid,
+                isLoggedIn: true
+            })
+
+            setIsSuccess(true)
+            setAlertMessage("Successfully purchased item!")
+        } catch (e) {
+            setIsSuccess(false)
+            setAlertMessage("Cannot purchase item")
+            console.log('handleExchange error', e)
+        } finally {
+            setIsAlertOpen(true)
+        }
+    }
+
+    const handleAlertClose = () => {
+        setIsAlertOpen(false)
+    }
+
     const {title, photo, price, user, location, description} = currentItem;
     return (
+        <>
+        <AlertMui severity={isSuccess ? 'success' : 'error'} handleAlertClose={handleAlertClose} isAlertOpen={isAlertOpen} message={alertMessage} />
+
         <ColumnComponent>
             <span style={{fontSize: 50, fontWeight: 700, marginBottom: 20}}>{title}</span>
             <RowComponent style={{gap: 130, alignItems: "flex-start"}}>
@@ -49,6 +83,8 @@ const SaleItemDetail = ({currentItem}: SaleItemDetailProps) => {
             </RowComponent>
 
         </ColumnComponent>
+        </>
+
     )
 }
 

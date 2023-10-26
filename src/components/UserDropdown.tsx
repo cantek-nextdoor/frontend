@@ -7,6 +7,7 @@ import TheaterComedyIcon from '@mui/icons-material/TheaterComedy';
 import LogoutIcon from '@mui/icons-material/Logout';
 import {USE_USER_STORE_DEFAULT_PROPS, useUserStore} from "../zustand/user.ts";
 import Cookies from 'js-cookie';
+import {useNavigate} from "react-router-dom";
 
 
 interface IUserDropdown {
@@ -18,11 +19,13 @@ interface IUserDropdown {
 
 export const UserDropdown = ({id, isUserProfileOpen, onClose, anchorEl}: IUserDropdown) => {
     const resetUser = useUserStore((state) => state.resetUser)
+    const navigate = useNavigate();
 
     const handleLogout = () => {
         Cookies.remove('accessToken', {path: ''})
         Cookies.remove('refreshToken', {path: ''})
         resetUser(USE_USER_STORE_DEFAULT_PROPS)
+        navigate("/auth");
     }
 
     return (<>
