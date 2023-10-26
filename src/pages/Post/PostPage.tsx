@@ -1,5 +1,5 @@
 import * as React from "react";
-import {useState} from "react";
+import { useState } from "react";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
@@ -7,19 +7,20 @@ import Paper from "@mui/material/Paper";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
-import Select, {SelectChangeEvent} from "@mui/material/Select";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
 import Button from "@mui/material/Button";
 import dayjs from "dayjs";
-import {v4 as uuidv4} from "uuid";
+import { v4 as uuidv4 } from "uuid";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import Chip from "@mui/material/Chip";
-import {createPostRequest} from "../../axios/post";
-import {status} from "../../components/entities/status";
-import {useUserStore} from "../../zustand/user";
-import {tags} from "../../components/entities/tags";
-import {LocalizationProvider} from "@mui/x-date-pickers/LocalizationProvider";
-import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
-import {DatePicker} from "@mui/x-date-pickers/DatePicker";
+import { createPostRequest } from "../../axios/post";
+import { status } from "../../components/entities/status";
+import { useUserStore } from "../../zustand/user";
+import { tags } from "../../components/entities/tags";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { TextareaAutosize } from "@mui/material";
 
 export default function PostForm() {
   const [title, setTitle] = useState("");
@@ -28,7 +29,7 @@ export default function PostForm() {
 
   const userId = useUserStore((state) => state.uuid);
 
-  const handleSelectChange = (event: SelectChangeEvent<typeof tagList>) => {
+  const handleTagChange = (event: SelectChangeEvent<typeof tagList>) => {
     const {
       target: { value },
     } = event;
@@ -65,6 +66,7 @@ export default function PostForm() {
         eventDate: new Date(),
         status: status.open,
         likedUserList: [],
+        category: "",
       };
 
       createPostRequest(dataToSend);
@@ -72,9 +74,7 @@ export default function PostForm() {
   };
 
   const today = dayjs();
-  const tomorrow = dayjs().add(1,'day');
-
-
+  const tomorrow = dayjs().add(1, "day");
 
   return (
     <form onSubmit={handleSubmit}>
@@ -173,31 +173,29 @@ export default function PostForm() {
               <FormControl fullWidth size="small">
                 <InputLabel id="demo-simple-select-label">Tag</InputLabel>
 
-         <Select
-          labelId="demo-multiple-chip-label"
-          id="demo-multiple-chip"
-          multiple
-          value={tagList}
-          onChange={handleSelectChange}
-          input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
-          renderValue={(selected) => (
-            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-              {selected.map((value) => (
-                <Chip key={value} label={value} />
-              ))}
-            </Box>
-          )}
-        >
-          {tags.map((tag) => (
-            <MenuItem
-              key={tag}
-              value={tag}
-            >
-              {tag}
-            </MenuItem>
-          ))}
-        </Select>
-
+                <Select
+                  labelId="demo-multiple-chip-label"
+                  id="demo-multiple-chip"
+                  multiple
+                  value={tagList}
+                  onChange={handleTagChange}
+                  input={
+                    <OutlinedInput id="select-multiple-chip" label="Chip" />
+                  }
+                  renderValue={(selected) => (
+                    <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                      {selected.map((value) => (
+                        <Chip key={value} label={value} />
+                      ))}
+                    </Box>
+                  )}
+                >
+                  {tags.map((tag) => (
+                    <MenuItem key={tag} value={tag}>
+                      {tag}
+                    </MenuItem>
+                  ))}
+                </Select>
               </FormControl>
             </Grid>
             <Grid
@@ -219,5 +217,4 @@ export default function PostForm() {
       </Paper>
     </form>
   );
-
 }
