@@ -22,6 +22,7 @@ import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
 import {DatePicker} from "@mui/x-date-pickers/DatePicker";
 import {TextareaAutosize} from "@mui/material";
 import {AlertMui} from "../../ui-components/AlertMui.tsx";
+import {useNavigate} from "react-router-dom";
 
 export default function PostForm() {
     const [title, setTitle] = useState("");
@@ -31,6 +32,7 @@ export default function PostForm() {
     const [isSuccess, setIsSuccess] = useState(false)
     const [alertMessage, setAlertMessage] = useState("")
 
+    const navigate = useNavigate();
     const userId = useUserStore((state) => state.uuid);
 
     const handleSelectChange = (event: SelectChangeEvent<typeof tagList>) => {
@@ -81,6 +83,7 @@ export default function PostForm() {
             }
             setIsSuccess(true)
             setAlertMessage("Successfully created post!")
+            navigate('/')
         } catch (e) {
             setIsSuccess(false)
             setAlertMessage("Cannot create post")
