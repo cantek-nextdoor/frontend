@@ -20,12 +20,10 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import SearchIcon from "@mui/icons-material/Search";
 import HomeIcon from "@mui/icons-material/Home";
-import LocalActivityIcon from "@mui/icons-material/LocalActivity";
 import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 import MilitaryTechIcon from "@mui/icons-material/MilitaryTech";
 import EventIcon from '@mui/icons-material/Event';
 import HomePage from "./pages/Home/HomePage";
-import ActivitiesPage from "./pages/Activities/ActivitiesPage";
 import SalePage from "./pages/Sale/SalePage";
 import PointPage from "./pages/Point/PointPage";
 import ButtonMui from "./ui-components/ButtonMui.tsx";
@@ -49,11 +47,6 @@ const drawerItems: drawerItemsProps[] = [
         icon: <HomeIcon/>,
     },
     {
-        id: "activities",
-        title: "Activities",
-        icon: <LocalActivityIcon/>,
-    },
-        {
         id: "events",
         title: "Events",
         icon: <EventIcon/>,
@@ -269,7 +262,6 @@ const App = () => {
     <Routes>
         <Route path="/" element={<Navigation />}>
             <Route index element={<HomePage />} />
-            <Route path="activities" element={<ActivitiesPage />} />
             <Route path="auth" element={<AuthPage/>}/>
             <Route path="events" element={<EventsPage />} />
             <Route path="sale" element={<SalePage />} />
