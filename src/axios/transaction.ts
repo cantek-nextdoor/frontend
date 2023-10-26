@@ -15,5 +15,16 @@ accessInstance.interceptors.request.use(
     }
 );
 
+export interface IGetUserTransactionsRes {
+    userTransactions: ITransactions[]
+}
+
+export interface ITransactions {
+    createdAt: string;
+    postPoints: number;
+    fromPoints: number;
+    toPoints: number;
+}
+
 export const createExchange = (payload: any) => accessInstance.post("/api/transaction/exchange", payload);
-export const getUserTransactions = (uuid: string) => accessInstance.get(`api/transaction/${uuid}`)
+export const getUserTransactions = (uuid: string) => accessInstance.get<IGetUserTransactionsRes>(`api/transaction/${uuid}`)

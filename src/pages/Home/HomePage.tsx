@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 import Post from '../../components/Post/Post';
-import { getAllPostRequest } from "../../axios/home";
+import {getAllPostRequest} from "../../axios/home";
 
 const HomePage = () => {
   const [postList, setPostList] = useState<Post[]>([]);
