@@ -27,7 +27,7 @@ export const useUserStore = create<TUseUserStoreProps>()(
         (set) => ({
             ...USE_USER_STORE_DEFAULT_PROPS,
             updateUser: (state) => set(() => ({...state, isLoggedIn: true})),
-            resetUser: (state) => set(() => (state ?? USE_USER_STORE_DEFAULT_PROPS))
+            resetUser: (state) => set(() => (state))
         }),
         {
             name: 'user-storage', // name of the item in the storage (must be unique)
