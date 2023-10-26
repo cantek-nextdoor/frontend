@@ -11,12 +11,20 @@ import {useNavigate} from "react-router-dom";
 import {loginUser, registerUser} from "../axios/auth.ts";
 import {TextFieldMui} from "../ui-components/TextFieldMui.tsx";
 import {useUserStore} from "../zustand/user.ts";
-import { FormHelperText } from "@mui/material";
+import {FormHelperText} from "@mui/material";
+import {AlertMui} from "../ui-components/AlertMui.tsx";
 
 export const AuthPanel = () => {
     const [isLogin, setIsLogin] = useState(true);
     const [password, setPassword]  = useState("");
     const [errorMessage, setErrorMessage] = useState("");
+    const [isAlertOpen, setIsAlertOpen] = useState(false)
+    const [isSuccess, setIsSuccess] = useState(false)
+    const [alertMessage, setAlertMessage] = useState("")
+
+    const handleAlertClose = () => {
+        setIsAlertOpen(false)
+    }
 
     const navigate = useNavigate();
     const ACTION_MESSAGE = isLogin ? "Sign In" : "Sign Up";
@@ -152,15 +160,20 @@ export const AuthPanel = () => {
             const res = isLogin ? await loginUser(payload) : await registerUser(registerPayload);
             updateUser({...res.data, isLoggedIn: true})
             navigate("/");
-        } catch (e){
-            console.log(e)
+        } catch (e) {
+            setIsSuccess(false)
+            setAlertMessage(`Cannot ${ACTION_MESSAGE}`)
              setErrorMessage("Login Failed");
-             return;
+            console.log(e)
+        } finally {
+            setIsAlertOpen(true)
         }
     };
 
     return (
         <div>
+            <AlertMui severity={isSuccess ? 'success' : 'error'} handleAlertClose={handleAlertClose} isAlertOpen={isAlertOpen} message={alertMessage} />
+
             <CssBaseline/>
 
             <Box
