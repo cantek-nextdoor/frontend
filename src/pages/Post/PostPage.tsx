@@ -21,204 +21,225 @@ import {LocalizationProvider} from "@mui/x-date-pickers/LocalizationProvider";
 import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
 import {DatePicker} from "@mui/x-date-pickers/DatePicker";
 import {TextareaAutosize} from "@mui/material";
+import {AlertMui} from "../../ui-components/AlertMui.tsx";
 
 export default function PostForm() {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [tagList, setTagList] = React.useState<string[]>([]);
+    const [title, setTitle] = useState("");
+    const [description, setDescription] = useState("");
+    const [tagList, setTagList] = React.useState<string[]>([]);
+    const [isAlertOpen, setIsAlertOpen] = useState(false)
+    const [isSuccess, setIsSuccess] = useState(false)
+    const [alertMessage, setAlertMessage] = useState("")
 
-  const userId = useUserStore((state) => state.uuid);
+    const userId = useUserStore((state) => state.uuid);
 
-  const handleSelectChange = (event: SelectChangeEvent<typeof tagList>) => {
-    const {
-      target: { value },
-    } = event;
-    setTagList(typeof value === "string" ? value.split(",") : value);
-  };
+    const handleSelectChange = (event: SelectChangeEvent<typeof tagList>) => {
+        const {
+            target: {value},
+        } = event;
+        setTagList(typeof value === "string" ? value.split(",") : value);
+    };
 
-  const handleContentChange = (
-    event: React.ChangeEvent<HTMLTextAreaElement>
-  ) => {
-    setDescription(event.target.value); // Update content as a string
-  };
-
-  const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTitle(event.target.value); // Update content as a string
-  };
-
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
-    if (description.length < 5 || title.length < 5) {
-      window.alert("The title and content is less than 5 letter!.");
-    } else {
-      console.log("submit form!");
-
-      const dataToSend = {
-        userId,
-        postId: uuidv4(),
-        title,
-        imageUrl: "string",
-        description,
-        tags: tagList,
-        points: 0,
-        numOfLike: 0,
-        postedDate: new Date(),
-        eventDate: new Date(),
-        status: status.open,
-        likedUserList: [],
-      };
-
-      createPostRequest(dataToSend);
+    const handleAlertClose = () => {
+        setIsAlertOpen(false)
     }
-  };
 
-  const today = dayjs();
-  const tomorrow = dayjs().add(1,'day');
+    const handleContentChange = (
+        event: React.ChangeEvent<HTMLTextAreaElement>
+    ) => {
+        setDescription(event.target.value); // Update content as a string
+    };
+
+    const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setTitle(event.target.value); // Update content as a string
+    };
+
+    const handleSubmit = async (event: React.FormEvent) => {
+        try {
+
+            event.preventDefault();
+            if (description.length < 5 || title.length < 5) {
+                window.alert("The title and content is less than 5 letter!.");
+            } else {
+                console.log("submit form!");
+
+                const dataToSend = {
+                    userId,
+                    postId: uuidv4(),
+                    title,
+                    imageUrl: "string",
+                    description,
+                    tags: tagList,
+                    points: 0,
+                    numOfLike: 0,
+                    postedDate: new Date(),
+                    eventDate: new Date(),
+                    status: status.open,
+                    likedUserList: [],
+                };
+                await createPostRequest(dataToSend);
+            }
+            setIsSuccess(true)
+            setAlertMessage("Successfully created post!")
+        } catch (e) {
+            setIsSuccess(false)
+            setAlertMessage("Cannot create post")
+            console.log('Create Post error: ', e)
+        } finally{
+            setIsAlertOpen(true)
+        }
+    };
+
+    const today = dayjs();
+    const tomorrow = dayjs().add(1, 'day');
 
 
+    return (
+        <>
+            <AlertMui severity={isSuccess ? 'success' : 'error'} handleAlertClose={handleAlertClose} isAlertOpen={isAlertOpen} message={alertMessage} />
 
-  return (
-    <form onSubmit={handleSubmit}>
-      <Paper elevation={3} sx={{ marginRight: "15%", marginLeft: "15%" }}>
-        <Box sx={{ padding: 5 }}>
-          <Grid container spacing={3}>
-            <Grid item xs={12} sm={2}>
-              <InputLabel
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  fontWeight: 700,
-                }}
-              >
-                Title
-              </InputLabel>
-            </Grid>
-            <Grid item xs={12} sm={10}>
-              <TextField
-                required
-                id="title"
-                name="title"
-                label="Title"
-                fullWidth
-                size="small"
-                autoComplete="off"
-                variant="outlined"
-                onChange={handleTitleChange}
-              />
-            </Grid>
-            <Grid container item xs={12} sm={2} style={{ height: "300px" }}>
-              <InputLabel
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  fontWeight: 700,
-                }}
-              >
-                Content
-              </InputLabel>
-            </Grid>
-            <Grid item xs={12} sm={10} xl={15} style={{ height: "300px" }}>
-              <TextareaAutosize
-                required
-                id="content"
-                name="content"
-                aria-label="content"
-                placeholder="Type something..."
-                minRows={3} // Specify the minimum number of rows
-                maxRows={6} // Specify the maximum number of rows
-                style={{
-                  width: "100%",
-                  height: "50%",
-                  maxHeight: "250px",
-                  maxWidth: "100%",
-                  minWidth: "100%",
-                  minHeight: "70%",
-                }}
-                value={description}
-                onChange={handleContentChange}
-              />
-            </Grid>
-            <Grid item xs={12} sm={2}>
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DatePicker
-                  label="Select a start date"
-                  // value={selectedDate}
-                  // onChange={handleDateChange}
-                  defaultValue={today}
-                  minDate={today}
-                  disablePast
-                />
-                <DatePicker
-                  label="Select a due date"
-                  // value={selectedDate}
-                  // onChange={handleDateChange}
-                  defaultValue={tomorrow}
-                  minDate={tomorrow}
-                  disablePast
-                />
-              </LocalizationProvider>
-            </Grid>
-            <Grid item xs={12} sm={2}>
-              <InputLabel
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  fontWeight: 700,
-                }}
-              >
-                Category
-              </InputLabel>
-            </Grid>
+            <form onSubmit={handleSubmit}>
+                <Paper elevation={3} sx={{marginRight: "15%", marginLeft: "15%"}}>
+                    <Box sx={{padding: 5}}>
+                        <Grid container spacing={3}>
+                            <Grid item xs={12} sm={2}>
+                                <InputLabel
+                                    sx={{
+                                        display: "flex",
+                                        justifyContent: "center",
+                                        fontWeight: 700,
+                                    }}
+                                >
+                                    Title
+                                </InputLabel>
+                            </Grid>
+                            <Grid item xs={12} sm={10}>
+                                <TextField
+                                    required
+                                    id="title"
+                                    name="title"
+                                    label="Title"
+                                    fullWidth
+                                    size="small"
+                                    autoComplete="off"
+                                    variant="outlined"
+                                    onChange={handleTitleChange}
+                                />
+                            </Grid>
+                            <Grid container item xs={12} sm={2} style={{height: "300px"}}>
+                                <InputLabel
+                                    sx={{
+                                        display: "flex",
+                                        justifyContent: "center",
+                                        fontWeight: 700,
+                                    }}
+                                >
+                                    Content
+                                </InputLabel>
+                            </Grid>
+                            <Grid item xs={12} sm={10} xl={15} style={{height: "300px"}}>
+                                <TextareaAutosize
+                                    required
+                                    id="content"
+                                    name="content"
+                                    aria-label="content"
+                                    placeholder="Type something..."
+                                    minRows={3} // Specify the minimum number of rows
+                                    maxRows={6} // Specify the maximum number of rows
+                                    style={{
+                                        width: "100%",
+                                        height: "50%",
+                                        maxHeight: "250px",
+                                        maxWidth: "100%",
+                                        minWidth: "100%",
+                                        minHeight: "70%",
+                                    }}
+                                    value={description}
+                                    onChange={handleContentChange}
+                                />
+                            </Grid>
+                            <Grid item xs={12} sm={2}>
+                                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                    <DatePicker
+                                        label="Select a start date"
+                                        // value={selectedDate}
+                                        // onChange={handleDateChange}
+                                        defaultValue={today}
+                                        minDate={today}
+                                        disablePast
+                                    />
+                                    <DatePicker
+                                        label="Select a due date"
+                                        // value={selectedDate}
+                                        // onChange={handleDateChange}
+                                        defaultValue={tomorrow}
+                                        minDate={tomorrow}
+                                        disablePast
+                                    />
+                                </LocalizationProvider>
+                            </Grid>
+                            <Grid item xs={12} sm={2}>
+                                <InputLabel
+                                    sx={{
+                                        display: "flex",
+                                        justifyContent: "center",
+                                        fontWeight: 700,
+                                    }}
+                                >
+                                    Category
+                                </InputLabel>
+                            </Grid>
 
-            <Grid item xs={12} sm={4}>
-              <FormControl fullWidth size="small">
-                <InputLabel id="demo-simple-select-label">Tag</InputLabel>
+                            <Grid item xs={12} sm={4}>
+                                <FormControl fullWidth size="small">
+                                    <InputLabel id="demo-simple-select-label">Tag</InputLabel>
 
-         <Select
-          labelId="demo-multiple-chip-label"
-          id="demo-multiple-chip"
-          multiple
-          value={tagList}
-          onChange={handleSelectChange}
-          input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
-          renderValue={(selected) => (
-            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-              {selected.map((value) => (
-                <Chip key={value} label={value} />
-              ))}
-            </Box>
-          )}
-        >
-          {tags.map((tag) => (
-            <MenuItem
-              key={tag}
-              value={tag}
-            >
-              {tag}
-            </MenuItem>
-          ))}
-        </Select>
+                                    <Select
+                                        labelId="demo-multiple-chip-label"
+                                        id="demo-multiple-chip"
+                                        multiple
+                                        value={tagList}
+                                        onChange={handleSelectChange}
+                                        input={<OutlinedInput id="select-multiple-chip" label="Chip"/>}
+                                        renderValue={(selected) => (
+                                            <Box sx={{display: 'flex', flexWrap: 'wrap', gap: 0.5}}>
+                                                {selected.map((value) => (
+                                                    <Chip key={value} label={value}/>
+                                                ))}
+                                            </Box>
+                                        )}
+                                    >
+                                        {tags.map((tag) => (
+                                            <MenuItem
+                                                key={tag}
+                                                value={tag}
+                                            >
+                                                {tag}
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
 
-              </FormControl>
-            </Grid>
-            <Grid
-              item
-              xs={12}
-              sm={4}
-              sx={{ display: "flex", justifyContent: "center" }}
-            >
-              <Button
-                variant="contained"
-                sx={{ color: "#eee8e3", justifySelf: "center" }}
-                type="submit"
-              >
-                Submit
-              </Button>
-            </Grid>
-          </Grid>
-        </Box>
-      </Paper>
-    </form>
-  );
+                                </FormControl>
+                            </Grid>
+                            <Grid
+                                item
+                                xs={12}
+                                sm={4}
+                                sx={{display: "flex", justifyContent: "center"}}
+                            >
+                                <Button
+                                    variant="contained"
+                                    sx={{color: "#eee8e3", justifySelf: "center"}}
+                                    type="submit"
+                                >
+                                    Submit
+                                </Button>
+                            </Grid>
+                        </Grid>
+                    </Box>
+                </Paper>
+            </form>
+        </>
+    );
 
 }
