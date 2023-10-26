@@ -20,6 +20,7 @@ import {tags} from "../../components/entities/tags";
 import {LocalizationProvider} from "@mui/x-date-pickers/LocalizationProvider";
 import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
 import {DatePicker} from "@mui/x-date-pickers/DatePicker";
+import {TextareaAutosize} from "@mui/material";
 
 export default function PostForm() {
   const [title, setTitle] = useState("");
