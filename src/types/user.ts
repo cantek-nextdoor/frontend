@@ -18,3 +18,5 @@ export type TAuthRes = {
     userType: string;
     uuid: string;
 } & TAbstractRes
+
+export type TRankedUser = Pick<TAuthRes, 'displayName' | 'points' | 'postalCode' | 'uuid'>
