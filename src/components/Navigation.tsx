@@ -1,5 +1,5 @@
 import {useTheme} from "@mui/material/styles";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {NavLink, Outlet, useNavigate} from "react-router-dom";
 import {useUserStore} from "../zustand/user.ts";
 import Box from "@mui/material/Box";
@@ -41,6 +41,12 @@ export const Navigation = () => {
 
     const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
 
+    useEffect( () => {
+        if (!isLoggedIn){
+            navigate("/");
+        }
+    }, [])
+
     const handleDrawerOpen = () => {
         setOpen(true);
     };
@@ -61,7 +67,7 @@ export const Navigation = () => {
     const id = isUserProfileOpen ? 'user-profile-id' : '';
 
     return (
-        <Box sx={{display: "flex"}}>
+        <Box sx={{display: "flex", maxWidth: 1280 }}>
             <CssBaseline/>
             <AppBar position="fixed" open={open}>
                 <Toolbar>
@@ -138,7 +144,7 @@ export const Navigation = () => {
                         <ListItem key={item.id} disablePadding>
                             <ListItemButton
                                 onClick={() => {
-                                    navigate(`/${item.id === "home" ? "" : item.id}`);
+                                    navigate(`/${item.id}`);
                                     handleDrawerClose();
                                 }}
                             >
