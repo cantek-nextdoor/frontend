@@ -25,6 +25,9 @@ import {SearchIconWrapper} from "./SearchIconWrapper.tsx";
 import {Search} from "./Search.tsx";
 import {Main} from "./Main.tsx";
 import {AppBar} from "./Appbar.tsx";
+import {UserDropdown} from "./UserDropdown.tsx";
+import Typography from "@mui/material/Typography";
+import SupervisedUserCircleIcon from '@mui/icons-material/SupervisedUserCircle';
 
 const drawerWidth = 240;
 
@@ -34,7 +37,9 @@ export const Navigation = () => {
     const navigate = useNavigate();
     const displayName = useUserStore((state) => state.displayName)
     const isLoggedIn = useUserStore((state) => state.isLoggedIn)
+    const points = useUserStore((state) => state.points)
 
+    const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -43,6 +48,17 @@ export const Navigation = () => {
     const handleDrawerClose = () => {
         setOpen(false);
     };
+
+    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
+    const isUserProfileOpen = Boolean(anchorEl);
+    const id = isUserProfileOpen ? 'user-profile-id' : '';
 
     return (
         <Box sx={{display: "flex"}}>
@@ -67,16 +83,31 @@ export const Navigation = () => {
                             inputProps={{"aria-label": "search"}}
                         />
                     </Search>
-                    {/* <Typography variant="h6" noWrap sx={{ flexGrow: 1 }} component="div">
-                Dan
-            </Typography> */}
+
                     <div style={{flexGrow: 1}}></div>
-                    <ButtonMui
+                    {isLoggedIn &&
+                        <>
+                            <div style={{display: 'flex', flexDirection: 'row'}}>
+                                <SupervisedUserCircleIcon/>
+                                <Typography sx={{pl: 1, pr: 4}}>{points}</Typography>
+                            </div>
+                            <ButtonMui
+                                aria-describedby={id}
+                                color="inherit"
+                                onClick={handleClick}
+                                text={displayName}
+                            />
+                            <UserDropdown id={id} isUserProfileOpen={isUserProfileOpen} onClose={handleClose}
+                                          anchorEl={anchorEl}
+                            />
+                        </>
+                    }
+                    {!isLoggedIn && <ButtonMui
                         color="inherit"
                         component={NavLink}
                         to="/auth"
-                        text={isLoggedIn ? displayName : "Login / Register"}
-                    />
+                        text="Login / Register"
+                    />}
                 </Toolbar>
             </AppBar>
 
