@@ -16,4 +16,4 @@ accessInstance.interceptors.request.use(
 );
 
 export const createExchange = (payload: any) => accessInstance.post("/api/transaction/exchange", payload);
-
+export const getUserTransactions = (uuid: string) => accessInstance.get(`api/transaction/${uuid}`)

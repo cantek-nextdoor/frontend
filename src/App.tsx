@@ -9,6 +9,7 @@ import SaleItemDetailPage from "./pages/Sale/SaleItemDetailPage.tsx";
 import NotFoundPage from "./pages/NotFoundPage";
 import PostPage from './pages/Post/PostPage';
 import {Navigation} from "./components/Navigation.tsx";
+import {TransactionPage} from "./pages/Transaction/Transaction.tsx";
 
 const App = () => {
     return (
@@ -17,6 +18,7 @@ const App = () => {
                 <Route path="/" element={<Navigation/>}>
                     <Route index element={<HomePage/>}/>
                     <Route path="activities" element={<ActivitiesPage/>}/>
+                    <Route path="my-transactions" element={<TransactionPage />} />
                     <Route path="auth" element={<AuthPage/>}/>
                     <Route path="sale" element={<SalePage/>}/>
                     <Route path="itemDetail/:id" element={<SaleItemDetailPage/>}/>
