@@ -2,12 +2,14 @@ import { CSSProperties, ReactNode } from "react";
 
 type RowComponentProps = {
   style?: CSSProperties;
+  className?: string;
   children: ReactNode;
 };
 
-const RowComponent = ({style, children}: RowComponentProps) => {
+const RowComponent = ({style, className, children}: RowComponentProps) => {
   return (
     <div
+      className={className}
       style={{
         display: "flex",
         flexDirection: "row",
