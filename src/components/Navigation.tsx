@@ -137,9 +137,10 @@ export const Navigation = () => {
                     {drawerItems.map((item) => (
                         <ListItem key={item.id} disablePadding>
                             <ListItemButton
-                                onClick={() =>
-                                    navigate(`/${item.id === "home" ? "" : item.id}`)
-                                }
+                                onClick={() => {
+                                    navigate(`/${item.id === "home" ? "" : item.id}`);
+                                    handleDrawerClose();
+                                }}
                             >
                                 <ListItemIcon>{item.icon}</ListItemIcon>
                                 <ListItemText primary={item.title}/>
