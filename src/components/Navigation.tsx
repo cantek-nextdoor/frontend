@@ -61,7 +61,7 @@ export const Navigation = () => {
     const id = isUserProfileOpen ? 'user-profile-id' : '';
 
     return (
-        <Box sx={{display: "flex"}}>
+        <Box sx={{display: "flex", maxWidth: 1280 }}>
             <CssBaseline/>
             <AppBar position="fixed" open={open}>
                 <Toolbar>
