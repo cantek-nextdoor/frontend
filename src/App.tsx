@@ -11,7 +11,6 @@ import PostPage from './pages/Post/PostPage';
 import {Navigation} from "./components/Navigation.tsx";
 import InitialPage from './pages/Initial/InitialPage.tsx';
 
-
 const App = () => {
     return (
         <>
@@ -23,7 +22,7 @@ const App = () => {
                     <Route path="activities" element={<ActivitiesPage/>}/>
                     <Route path="sale" element={<SalePage/>}/>
                     <Route path="itemDetail/:id" element={<SaleItemDetailPage/>}/>
-                    <Route path="point" element={<PointPage/>}/>
+                    <Route path="ranking" element={<PointPage/>}/>
                     <Route path="post" element={<PostPage/>}/>
                     <Route path="*" element={<NotFoundPage/>}/>
                 </Route>
