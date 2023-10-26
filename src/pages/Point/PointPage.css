@@ -1,0 +1,40 @@
+.top-3-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background: linear-gradient(
+    to left,
+    rgb(130, 207, 207) 0%,
+    rgb(92, 149, 215) 100%
+  );
+  border-radius: 20px;
+}
+
+.container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background: rgb(201, 220, 241);
+  /* background: #fff; */
+  border-radius: 20px;
+}
+
+.name {
+  color: black;
+  width: 35%;
+  text-align: left;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.location {
+  color: black;
+  width: 35%;
+  text-align: left;
+  font-size: 17px;
+  font-weight: 400;
+}

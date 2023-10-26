@@ -55,8 +55,8 @@ const drawerItems: drawerItemsProps[] = [
         icon: <LocalOfferIcon/>,
     },
     {
-        id: "point",
-        title: "Point",
+        id: "ranking",
+        title: "Ranking",
         icon: <MilitaryTechIcon/>,
     },
 ];
