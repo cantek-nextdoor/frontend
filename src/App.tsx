@@ -10,7 +10,6 @@ import NotFoundPage from "./pages/NotFoundPage";
 import PostPage from './pages/Post/PostPage';
 import {Navigation} from "./components/Navigation.tsx";
 
-
 const App = () => {
     return (
         <>
@@ -21,7 +20,7 @@ const App = () => {
                     <Route path="auth" element={<AuthPage/>}/>
                     <Route path="sale" element={<SalePage/>}/>
                     <Route path="itemDetail/:id" element={<SaleItemDetailPage/>}/>
-                    <Route path="point" element={<PointPage/>}/>
+                    <Route path="ranking" element={<PointPage/>}/>
                     <Route path="post" element={<PostPage/>}/>
                     <Route path="*" element={<NotFoundPage/>}/>
                 </Route>
