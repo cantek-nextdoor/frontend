@@ -3,9 +3,16 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
 import BackgroundPhoto from "../../assets/InitialPage.jpg";
 import ColumnComponent from "../../components/ColumnComponent";
+import { useEffect } from "react";
 
 const InitialPage = () => {
   const navigate = useNavigate();
+  
+  useEffect(() => {
+    navigate("/home");
+  }, [])
+  
+
   return (
     <div>
       <img src={BackgroundPhoto} alt="Background" style={{ width: "100vw", height: "100vh", opacity: 0.2 }} />
