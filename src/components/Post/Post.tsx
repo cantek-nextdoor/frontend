@@ -10,8 +10,8 @@ import {useState} from 'react';
 import RowComponent from "../RowComponent";
 import ColumnComponent from "../ColumnComponent";
 import CustomMenu from "../CustomMenu";
-import { useUserStore } from "../../zustand/user";
-import { getUserDetailRequest } from "../../axios/user";
+import {useUserStore} from "../../zustand/user";
+import {getUserDetailRequest} from "../../axios/user";
 
 
 type PostProps = {
@@ -44,14 +44,14 @@ const Post = ({post, changePost}: PostProps) => {
 getUserDetailRequest(apiUrl)
     .then((response) => {
         // Handle the response
-        setDisplayName(response.data.display_name);
+        setDisplayName(response.data.displayName);
     })
     .catch((error) => {
         // Handle errors
         console.error(error);
     });
 
-  
+
     return (
     <Paper elevation={2} sx={{ height: "fit-content", width: "70%" }}>
       <div style={{ display: "flex", flexDirection: "column", padding: 15, gap: 20}}>
@@ -80,12 +80,12 @@ getUserDetailRequest(apiUrl)
         </div>
 
         <RowComponent>
-          {currentPost.LikedNum === 0 ? 
+          {currentPost.LikedNum === 0 ?
             <span style={{ color: "#b4b8b5"}}>Be the first to react</span>
             :
             <div style={{ display: "flex", alignItems: "center", gap: 5}}><ThumbUpIcon sx={{ color: blue[500] }}/> {currentPost.LikedNum}</div>
           }
-          
+
           <RowComponent style={{gap: 10}}>
             {
               currentPost.youLiked ?
