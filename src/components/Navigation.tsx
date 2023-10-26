@@ -138,7 +138,7 @@ export const Navigation = () => {
                         <ListItem key={item.id} disablePadding>
                             <ListItemButton
                                 onClick={() => {
-                                    navigate(`/${item.id === "home" ? "" : item.id}`);
+                                    navigate(`/${item.id}`);
                                     handleDrawerClose();
                                 }}
                             >
