@@ -159,7 +159,7 @@ export const AuthPanel = () => {
         try {
             const res = isLogin ? await loginUser(payload) : await registerUser(registerPayload);
             updateUser({...res.data, isLoggedIn: true})
-            navigate("/");
+            navigate("/home");
         } catch (e) {
             setIsSuccess(false)
             setAlertMessage(`Cannot ${ACTION_MESSAGE}`)

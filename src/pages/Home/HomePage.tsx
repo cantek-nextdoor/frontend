@@ -6,6 +6,7 @@ const HomePage = () => {
   const [postList, setPostList] = useState<Post[]>([]);
 
   useEffect(() => {
+
     getAllPostRequest()
       .then(response => {
         if (Array.isArray(response.data)) {

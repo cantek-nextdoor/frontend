@@ -10,16 +10,20 @@ import NotFoundPage from "./pages/NotFoundPage";
 import PostPage from './pages/Post/PostPage';
 import {Navigation} from "./components/Navigation.tsx";
 import {TransactionPage} from "./pages/Transaction/Transaction.tsx";
+import InitialPage from './pages/Initial/InitialPage.tsx';
 
 const App = () => {
     return (
         <>
             <Routes>
-                <Route path="/" element={<Navigation/>}>
+                <Route path="/" element={<InitialPage/>}/>
+                <Route path="auth" element={<AuthPage/>}/>
+                <Route element={<Navigation/>}>
                     <Route index element={<HomePage/>}/>
                     <Route path="activities" element={<ActivitiesPage/>}/>
                     <Route path="my-transactions" element={<TransactionPage />} />
-                    <Route path="auth" element={<AuthPage/>}/>
+                    <Route path='home' element={<HomePage/>}/>
+                    <Route path="activities" element={<ActivitiesPage/>}/>
                     <Route path="sale" element={<SalePage/>}/>
                     <Route path="itemDetail/:id" element={<SaleItemDetailPage/>}/>
                     <Route path="ranking" element={<PointPage/>}/>
