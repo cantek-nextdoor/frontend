@@ -25,7 +25,7 @@ const InitialPage = () => {
           left: "5%",
           top: "0",
       }}>
-        <span className="title">NextDoor - A Virtual Neighbourhood</span>
+        <span className="title">OtherDoor - A Virtual Neighbourhood</span>
         <ColumnComponent style={{ gap: 20 }}>
           <span className="desc">Connect with the people living near you</span>
           <Button
