@@ -1,7 +1,6 @@
 import './App.css';
 import {Route, Routes} from "react-router-dom";
 import HomePage from './pages/Home/HomePage';
-import ActivitiesPage from './pages/Activities/ActivitiesPage';
 import SalePage from './pages/Sale/SalePage';
 import PointPage from './pages/Point/PointPage';
 import {AuthPage} from "./pages/Auth/AuthPage.tsx";
@@ -10,6 +9,7 @@ import NotFoundPage from "./pages/NotFoundPage";
 import PostPage from './pages/Post/PostPage';
 import {Navigation} from "./components/Navigation.tsx";
 import InitialPage from './pages/Initial/InitialPage.tsx';
+import {EventsPage} from "./pages/Events/EventsPage.tsx";
 
 const App = () => {
     return (
@@ -19,7 +19,7 @@ const App = () => {
                 <Route path="auth" element={<AuthPage/>}/>
                 <Route element={<Navigation/>}>
                     <Route path='home' element={<HomePage/>}/>
-                    <Route path="activities" element={<ActivitiesPage/>}/>
+                    <Route path="events" element={<EventsPage />} />
                     <Route path="sale" element={<SalePage/>}/>
                     <Route path="itemDetail/:id" element={<SaleItemDetailPage/>}/>
                     <Route path="ranking" element={<PointPage/>}/>
