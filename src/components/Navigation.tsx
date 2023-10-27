@@ -28,6 +28,8 @@ import {AppBar} from "./Appbar.tsx";
 import {UserDropdown} from "./UserDropdown.tsx";
 import Typography from "@mui/material/Typography";
 import SupervisedUserCircleIcon from '@mui/icons-material/SupervisedUserCircle';
+import Cookies from "js-cookie";
+import {getMe} from "../axios/user.ts";
 
 const drawerWidth = 240;
 
@@ -36,15 +38,35 @@ export const Navigation = () => {
     const [open, setOpen] = useState(false);
     const navigate = useNavigate();
     const displayName = useUserStore((state) => state.displayName)
+    const updateUser = useUserStore((state) => state.updateUser)
     const isLoggedIn = useUserStore((state) => state.isLoggedIn)
     const points = useUserStore((state) => state.points)
 
     const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
 
     useEffect( () => {
-        if (!isLoggedIn){
-            navigate("/");
+
+        const loginGoogleUser = async () => {
+            const accessToken = Cookies.get('accessToken')
+            if (accessToken){
+                const res = await getMe()
+                const updatedUser = res.data
+                updateUser({
+                    email: updatedUser.email,
+                    points: updatedUser.points,
+                    displayName: updatedUser.displayName,
+                    uuid: updatedUser.uuid,
+                    isLoggedIn: true
+                })
+            }
+
+            if (!isLoggedIn){
+                navigate("/");
+            }
         }
+
+        loginGoogleUser()
+
     }, [])
 
     const handleDrawerOpen = () => {

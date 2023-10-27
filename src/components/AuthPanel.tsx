@@ -1,4 +1,4 @@
-import {FormEvent, useState} from "react";
+import {FormEvent, useEffect, useState} from "react";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Avatar from "@mui/material/Avatar";
@@ -13,6 +13,7 @@ import {TextFieldMui} from "../ui-components/TextFieldMui.tsx";
 import {useUserStore} from "../zustand/user.ts";
 import {FormHelperText} from "@mui/material";
 import {AlertMui} from "../ui-components/AlertMui.tsx";
+import Cookies from "js-cookie";
 
 export const AuthPanel = () => {
     const [isLogin, setIsLogin] = useState(true);
@@ -21,6 +22,11 @@ export const AuthPanel = () => {
     const [isAlertOpen, setIsAlertOpen] = useState(false)
     const [isSuccess, setIsSuccess] = useState(false)
     const [alertMessage, setAlertMessage] = useState("")
+
+    useEffect( () => {
+        Cookies.remove('accessToken', {path: ''})
+        Cookies.remove('refreshToken', {path: ''})
+    }, [])
 
     const handleAlertClose = () => {
         setIsAlertOpen(false)
