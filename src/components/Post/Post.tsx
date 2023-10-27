@@ -1,6 +1,6 @@
 import "./Post.css";
 import {Avatar, Paper} from '@mui/material';
-import { deepPurple} from '@mui/material/colors';
+import {deepPurple} from '@mui/material/colors';
 import IosShareOutlinedIcon from '@mui/icons-material/IosShareOutlined';
 import {Post} from '../../pages/types/Post';
 import {useState} from 'react';
@@ -8,6 +8,7 @@ import RowComponent from "../RowComponent";
 import ColumnComponent from "../ColumnComponent";
 import CustomMenu from "../CustomMenu";
 import {getUserDetailRequest} from "../../axios/user";
+import Chip from "@mui/material/Chip";
 
 
 type PostProps = {
@@ -29,6 +30,7 @@ getUserDetailRequest(apiUrl)
         console.error(error);
     });
 
+console.log('post', post)
 
     return (
     <Paper elevation={2} sx={{ height: "fit-content", width: "70%" }}>
@@ -39,9 +41,15 @@ getUserDetailRequest(apiUrl)
             <ColumnComponent style={{ marginLeft: 15 }}>
               <span style={{ fontSize: 15, fontWeight: 600}}>{displayName}</span>
             </ColumnComponent>
+              <ColumnComponent style={{ marginLeft: 15 }}>
+                  <span style={{ fontSize: 15, fontWeight: 600}}>{'Posted At: ' + post?.postedDate?.slice(0,10)}</span>
+              </ColumnComponent>
           </RowComponent>
           <CustomMenu />
         </RowComponent>
+          <RowComponent style={{justifyContent: "start", gap: 5}}>
+              {Array.isArray(post.tags) && post.tags.map((tag) => <Chip label={tag} />)}
+          </RowComponent>
 
         <div style={{ textAlign: "left"}}>
           {currentPost.description}

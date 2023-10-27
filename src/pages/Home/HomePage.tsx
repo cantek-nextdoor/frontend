@@ -1,13 +1,14 @@
 import {useEffect, useState} from "react";
 import Post from '../../components/Post/Post';
-import { getAllPostRequest } from "../../axios/home";
-import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
-import { category } from "../types/Post";
+import {getAllPostRequest} from "../../axios/home";
+import {FormControl, InputLabel, MenuItem, Select} from "@mui/material";
+import {category} from "../types/Post";
 import {useUserStore} from "../../zustand/user";
 import RowComponent from "../../components/RowComponent";
 
 const HomePage = () => {
   const [postList, setPostList] = useState<any[]>([]);
+  const [displayPostList, setDisplayPostList] = useState<any[]>([])
   const [filteredCategory, setFilteredCategory] = useState<category>(category.all);
   const userPostalCode = useUserStore((state) => state.postalCode);
 
@@ -19,6 +20,7 @@ const HomePage = () => {
           // Store the data array in the state
           const tempArray = response.data;
           setPostList(tempArray);
+          setDisplayPostList(tempArray)
         } else {
           console.error('Response does not contain an array of Post data.');
         }
@@ -29,10 +31,11 @@ const HomePage = () => {
   }, []); // The empty dependency array ensures this runs only once
 
   useEffect(() => {
-    const temp = postList; // use post list instead of temp
-    if (filteredCategory === category.all) setPostList(temp);
+    if (filteredCategory === category.all) {
+      setDisplayPostList(postList);
+    }
     else {    
-      setPostList(temp.filter(item => item.categories === filteredCategory))
+      setDisplayPostList(postList.filter(item => item.categories === filteredCategory))
     }
   }, [filteredCategory]);
 
@@ -71,7 +74,7 @@ const HomePage = () => {
           </Select>
         </FormControl>
       </RowComponent>
-      {postList.map((post) => (
+      {displayPostList.map((post) => (
         <Post post={post} changePost={(e: Post) => postChange(e)} key ={post.postId}/>
       ))}
     </div>

@@ -1,4 +1,4 @@
-import { status } from "../../components/entities/status";
+import {status} from "../../components/entities/status";
 // export type Post = {
 //   id: number,
 //   user: string,
@@ -13,10 +13,10 @@ import { status } from "../../components/entities/status";
 // };
 
 export enum category {
-  all = 'ALL',
-  post = 'POST',
-  activity = 'ACTIVITY',
-  sale = 'SALE',
+  all = 'all',
+  post = 'post',
+  activity = 'activity',
+  sale = 'sale',
 }
 
 export type Post = {
@@ -28,7 +28,7 @@ export type Post = {
   points: number;
   userId: string,
   numOfLike: number;
-  postedDate: Date;
+  postedDate: string;
   status: status;
   likedUserList: string[];
   categories: category;

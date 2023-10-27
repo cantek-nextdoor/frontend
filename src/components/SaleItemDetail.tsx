@@ -27,7 +27,7 @@ const SaleItemDetail = ({currentItem}: SaleItemDetailProps) => {
             // TODO fetch data from posts
             await createExchange({
                 counterparty: '3521047a-cf6b-404a-a356-5ac920b1391d',
-                isCurrentUserSender: false,
+                isCurrentUserSender: true,
                 postId: 1
             })
 
