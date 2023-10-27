@@ -1,8 +1,8 @@
 import "./Post.css";
 import {Avatar, Paper} from '@mui/material';
-import {blue, deepPurple} from '@mui/material/colors';
-import ThumbUpIcon from '@mui/icons-material/ThumbUp';
-import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
+import {deepPurple} from '@mui/material/colors';
+// import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+// import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
 // import ModeCommentOutlinedIcon from '@mui/icons-material/ModeCommentOutlined';
 import IosShareOutlinedIcon from '@mui/icons-material/IosShareOutlined';
 import {Post} from '../../pages/types/Post';
@@ -10,7 +10,7 @@ import {useEffect, useState} from 'react';
 import RowComponent from "../RowComponent";
 import ColumnComponent from "../ColumnComponent";
 import CustomMenu from "../CustomMenu";
-import {useUserStore} from "../../zustand/user";
+// import {useUserStore} from "../../zustand/user";
 import {getUserDetailRequest} from "../../axios/user";
 
 
@@ -24,20 +24,20 @@ const Post = ({post, changePost}: PostProps) => {
   const [displayName, setDisplayName] = useState("");
   const currentUserId = useUserStore((state) => state.uuid)
 
-  const likeChange = () => {
-    const temp = currentPost;
+  // const likeChange = () => {
+  //   const temp = currentPost;
 
-      if (!currentPost.likedUserList.includes(currentUserId)) {
-        temp.youLiked = false;
-        temp.LikedNum = temp.LikedNum - 1;
-      }
-      else {
-        temp.youLiked = true;
-        temp.LikedNum = temp.LikedNum + 1;
-      }
-      setCurrentPost(temp);
-      changePost(temp);
-  }
+  //     if (!currentPost.likedUserList.includes(currentUserId)) {
+  //       temp.youLiked = false;
+  //       temp.LikedNum = temp.LikedNum - 1;
+  //     }
+  //     else {
+  //       temp.youLiked = true;
+  //       temp.LikedNum = temp.LikedNum + 1;
+  //     }
+  //     setCurrentPost(temp);
+  //     changePost(temp);
+  // }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -86,14 +86,14 @@ const Post = ({post, changePost}: PostProps) => {
         </div>
 
         <RowComponent>
-          {currentPost.LikedNum === 0 ?
+          {/* {currentPost.LikedNum === 0 ?
             <span style={{ color: "#b4b8b5"}}>Be the first to react</span>
             :
             <div style={{ display: "flex", alignItems: "center", gap: 5}}><ThumbUpIcon sx={{ color: blue[500] }}/> {currentPost.LikedNum}</div>
-          }
+          } */}
 
-          <RowComponent style={{gap: 10}}>
-            {
+          <RowComponent style={{gap: 10, justifyContent: "flex-end", width: "100%" }}>
+            {/* {
               currentPost.youLiked ?
               <div
                 className="option-style" onClick={likeChange}>
@@ -105,7 +105,7 @@ const Post = ({post, changePost}: PostProps) => {
                 <ThumbUpOutlinedIcon />
                 Like
               </div>
-            }
+            } */}
 
             {/* <div className="option-style">
               <ModeCommentOutlinedIcon />
