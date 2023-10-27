@@ -112,7 +112,7 @@ const PointPage = () => {
                         )
                  }
                 )
-            }; 
+            } 
             {!userWithinTopTen && (
                   <div style={{ width: '100%' }}>
                     <div>
