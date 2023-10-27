@@ -1,17 +1,20 @@
 import "./initialPage.css";
-import { useNavigate } from "react-router-dom";
-import { Button } from "@mui/material";
+import {useNavigate} from "react-router-dom";
+import {Button} from "@mui/material";
 import BackgroundPhoto from "../../assets/InitialPage.jpg";
 import ColumnComponent from "../../components/ColumnComponent";
-import { useEffect } from "react";
+import {useEffect} from "react";
+import {useUserStore} from "../../zustand/user.ts";
 
 const InitialPage = () => {
   const navigate = useNavigate();
-  
+    const isLoggedIn = useUserStore((state) => state.isLoggedIn)
+
   useEffect(() => {
-    navigate("/home");
+      if (isLoggedIn){
+            navigate("/home");
+      }
   }, [])
-  
 
   return (
     <div>

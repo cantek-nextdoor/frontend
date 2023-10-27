@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 import Post from '../../components/Post/Post';
 import { getAllPostRequest } from "../../axios/home";
 import postDummyData from "./PostDummyData.json";
@@ -11,6 +11,7 @@ const HomePage = () => {
   const [filteredCategory, setFilteredCategory] = useState<category>(category.all);
 
   useEffect(() => {
+
     getAllPostRequest()
       .then(response => {
         if (Array.isArray(response.data)) {
