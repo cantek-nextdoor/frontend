@@ -2,7 +2,6 @@ import {useEffect, useState} from 'react';
 import "./PointPage.css";
 import {getRankedUsers} from "../../axios/auth.ts";
 import {TRankedUser} from "../../types/user.ts";
-import rankDummyArray from "./RankDummyData.json";
 import ColumnComponent from '../../components/ColumnComponent.tsx';
 import RowComponent from '../../components/RowComponent.tsx';
 import GradeIcon from '@mui/icons-material/Grade';
@@ -11,55 +10,70 @@ import FirstRunnerUpIcon from "../../assets/1stRunnerUp.png";
 import SecondRunnerUpIcon from "../../assets/2ndRunnerUp.png";
 import ForwardIcon from '@mui/icons-material/Forward';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { useUserStore } from '../../zustand/user.ts';
+import { AxiosResponse } from 'axios';
+import { getUserRankingRequest } from '../../axios/point.ts';
+import star from "../../assets/star.png";
+
 
 
 const PointPage = () => {
-    const [currentUserID] = useState("3521047a-cf6b-404a-a356-5ac920b1391d");
+    const currentUserDisplayName  = useUserStore((state) => state.displayName);
+    const currentUserPoint  = useUserStore((state) => state.points);
+    const currentUserId = useUserStore((state) => state.uuid);
+
     const [rankedUsers, setRankedUsers] = useState<TRankedUser[]>([]);
-    const [currentUserIndex, setCurrentUserIndex] = useState(-1);
+    // const [currentUserIndex, setCurrentUserIndex] = useState(-1);
+    const [userWithinTopTen, setUserWithinTopTen ] = useState(false);
+    const [currentUserPosition, setCurrentUserPosition ] = useState(100);
+
+
+
 
     useEffect(() => {
+        let res: AxiosResponse<any, any>;
         const getUsersWithPoints = async () => {
             try {
-                console.log('getRankedUsers')
-                const res = await getRankedUsers()
-                console.log('res.data', res.data.users)
-                setRankedUsers(res.data.users)
+                res = await getRankedUsers();                
             } catch (e) {
-                console.log('getUsersWithPoint', e)
+                console.log('getUsersWithPoint', e);
             }
-        }
-        getUsersWithPoints()
+        };
+        getUsersWithPoints().then(() => {
+            setRankedUsers(res.data.users);
+        });
     }, []);
+
+    useEffect (()=> {
+        if(currentUserPosition<10){
+            setUserWithinTopTen(true);
+        }
+    }
+    ,[currentUserPosition]);
 
     useEffect(() => {
-        const sortedList = sortObjectsByPoints(rankDummyArray.dummyUsers);
-        console.log("sortedList", sortedList);
-        setRankedUsers(sortedList);
-
-        const tempArray = sortedList.map((user, index) => {
-            if (user.uuid === currentUserID) return index;
-            return null;
-        });
-        const index = tempArray.filter(index => index !== null)[0];
-        if ( index !== null ) setCurrentUserIndex(index);
+        let res: AxiosResponse<any, any>;
+        const fetchData = async () => {
+            try {
+            const apiUrl = '/api/user/ranking/' + currentUserId;
+              res = await getUserRankingRequest(apiUrl);
+            } catch (error) {
+              console.error(error);
+            }
+          };
+          fetchData().then(()=>{setCurrentUserPosition(res.data.userPosition);});
     }, []);
-
-    const sortObjectsByPoints = (usersList: TRankedUser[]) => usersList.sort((a, b) => b.points - a.points); 
-
     return (
         <div style={{ paddingBottom: 50, padding: 20}}>
             <div style={{ fontSize: 50, fontWeight: 700, marginBottom: 15}}>Ranking</div>
             <ColumnComponent style={{ gap: 15, alignItems: "center" }}>
                 {rankedUsers.map((user, index) => {
                     const { displayName, points, postalCode } = user;
-
-                    if (currentUserIndex === index || index < 10) {
                         return (
-                            <div className={index < 3 ? "top-3-container" : "container"} style={currentUserIndex === index ? { border: "2px solid rgb(2, 66, 242"} : {}}>
+                            <div key={index} className={index < 3 ? "top-3-container" : "container"} style={currentUserPosition - 1 === index ? { border: "2px solid rgb(2, 66, 242"} : {}}>
                                 <div style={{ flex: 5, display: "flex", alignItems: "center", justifyContent: "flex-end" }}>
                                     {
-                                        currentUserIndex === index && <ForwardIcon color='secondary' style={{ width: 60, height: 60}}/>
+                                        currentUserPosition-1 === index && <ForwardIcon color='secondary' style={{ width: 60, height: 60}}/>
                                     }
                                 
                                     <span
@@ -82,7 +96,8 @@ const PointPage = () => {
                                             : index === 1 ? 
                                                 <img src={FirstRunnerUpIcon} alt="1stRunnerUp" style={{ width: 60, height: 60}}/>
                                                 : index === 2 ? 
-                                                    <img src={SecondRunnerUpIcon} alt="2ndRunnerUp" style={{ width: 60, height: 60}}/> : ""
+                                                    <img src={SecondRunnerUpIcon} alt="2ndRunnerUp" style={{ width: 60, height: 60}}/> 
+                                                    : <img src={star} alt="remain" style={{ width: 60, height: 60}}/> 
                                     }
                                 </div>
                                 <ColumnComponent style={{ width: "50%", flex: 10, alignItems: "flex-start", justifyContent: "center"}}>
@@ -95,23 +110,45 @@ const PointPage = () => {
                                 </RowComponent>
                             </div>
                         )
-                    }
-                    else {
-                        if (currentUserIndex >= 10 && index === currentUserIndex - 1) {
-                            return (
-                                <div>
-                                    <MoreVertIcon color="primary" style={{ width: 60, height: 60 }}/>
+                 }
+                )
+            }; 
+            {!userWithinTopTen && (
+                  <div style={{ width: '100%' }}>
+                    <div>
+                      <MoreVertIcon color="primary" style={{ width: 60, height: 60 }} />
+                    </div>
+                      <div key={currentUserPosition} className={"container"} style={{border: "2px solid rgb(2, 66, 242"}}>
+                                <div style={{ flex: 5, display: "flex", alignItems: "center", justifyContent: "flex-end" }}>
+                                    {
+                                    currentUserPosition && <ForwardIcon color='secondary' style={{ width: 60, height: 60}}/>
+                                    }
+                                    <span
+                                        style={{
+                                            flex: 5,
+                                            textAlign: "right",
+                                            fontSize: 50,
+                                            fontWeight: 700,
+                                            color: "white",
+                                            paddingRight: 40,
+                                            borderRight: "3px solid #fff"
+                                        }}>
+                                            {currentUserPosition}
+                                    </span>
                                 </div>
-                            )
-                        }
-                        else{ 
-                            return null;
-                        }
-                    }
-                })}
+                                <ColumnComponent style={{ width: "50%", flex: 10, alignItems: "center", justifyContent: "center"}}>
+                                    <span className='name'>{currentUserDisplayName}</span>
+                                </ColumnComponent>
+                                <RowComponent style={{ flex: 10, justifyContent: "flex-end", marginRight: 40, color: "#fff", fontSize: 45, fontWeight: 600}}>
+                                    <GradeIcon style={{ width: 40, height: 40}}/>
+                                    {currentUserPoint}
+                                </RowComponent>
+                            </div>
+                    </div>
+                )
+              }
             </ColumnComponent>
-        </div>
-    )
+        </div>)
 }
 
 export default PointPage;
