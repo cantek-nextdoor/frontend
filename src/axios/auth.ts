@@ -13,5 +13,5 @@ export const registerUser = (payload: TAuthPayload) => axios.post<TAuthRes>("/ap
 
 
 export const jwtTest = () => accessInstance.get("/api/user/test");
-export const getRankedUsers = () => accessInstance.get("/api/user/ranking");
-export const refreshUserAccessToken = () => refreshInstance.post<{ accessToken: string }>("/api/auth/refresh")
+export const getRankedUsers = () => accessInstance.get("/api/user/ranking/top10");
+export const refreshUserAccessToken = () => refreshInstance.post<{ accessToken: string }>("/api/auth/refresh");

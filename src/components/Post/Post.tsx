@@ -6,7 +6,7 @@ import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
 // import ModeCommentOutlinedIcon from '@mui/icons-material/ModeCommentOutlined';
 import IosShareOutlinedIcon from '@mui/icons-material/IosShareOutlined';
 import {Post} from '../../pages/types/Post';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import RowComponent from "../RowComponent";
 import ColumnComponent from "../ColumnComponent";
 import CustomMenu from "../CustomMenu";
@@ -22,8 +22,6 @@ type PostProps = {
 const Post = ({post, changePost}: PostProps) => {
   const [currentPost, setCurrentPost] = useState(post);
   const [displayName, setDisplayName] = useState("");
-  const createdPostUserId = currentPost.userId;
-  const apiUrl = '/api/user/details/' + createdPostUserId;
   const currentUserId = useUserStore((state) => state.uuid)
 
   const likeChange = () => {
@@ -41,16 +39,23 @@ const Post = ({post, changePost}: PostProps) => {
       changePost(temp);
   }
 
-getUserDetailRequest(apiUrl)
-    .then((response) => {
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const createdPostUserId = currentPost.userId;
+        const apiUrl = '/api/user/details/' + createdPostUserId;
+        const response = await getUserDetailRequest(apiUrl);
         // Handle the response
-        setDisplayName(response.data.displayName);
-    })
-    .catch((error) => {
+        // console.log(response.data.display_name);
+        setDisplayName(response.data.display_name);
+        // console.log("displayname: ", displayName);
+      } catch (error) {
         // Handle errors
         console.error(error);
-    });
-
+      }
+    };
+    fetchData(); // Call the async function
+  }, [currentPost]);
 
     return (
     <Paper elevation={2} sx={{ height: "fit-content", width: "70%" }}>
@@ -61,7 +66,7 @@ getUserDetailRequest(apiUrl)
               currentPost.avator ?
               <Avatar alt={currentPost.avator} src={currentPost.avator} />
               :
-              <Avatar sx={{ bgcolor: deepPurple[500] }}>{displayName.charAt(0)}</Avatar>
+              <Avatar sx={{ bgcolor: deepPurple[500] }}>{displayName ? displayName.charAt(0) : '?'} </Avatar>
             }
             <ColumnComponent style={{ marginLeft: 15 }}>
               <span style={{ fontSize: 15, fontWeight: 600}}>{displayName}</span>
@@ -76,6 +81,7 @@ getUserDetailRequest(apiUrl)
         </div> */}
 
         <div style={{ textAlign: "left"}}>
+          {displayName}
           {currentPost.description}
         </div>
 
