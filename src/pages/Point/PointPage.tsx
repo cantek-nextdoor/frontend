@@ -70,10 +70,10 @@ const PointPage = () => {
                 {rankedUsers.map((user, index) => {
                     const { displayName, points, postalCode } = user;
                         return (
-                            <div key={index} className={index < 3 ? "top-3-container" : "container"} style={currentUserPosition === index ? { border: "2px solid rgb(2, 66, 242"} : {}}>
+                            <div key={index} className={index < 3 ? "top-3-container" : "container"} style={currentUserPosition - 1 === index ? { border: "2px solid rgb(2, 66, 242"} : {}}>
                                 <div style={{ flex: 5, display: "flex", alignItems: "center", justifyContent: "flex-end" }}>
                                     {
-                                        currentUserPosition === index && <ForwardIcon color='secondary' style={{ width: 60, height: 60}}/>
+                                        currentUserPosition-1 === index && <ForwardIcon color='secondary' style={{ width: 60, height: 60}}/>
                                     }
                                 
                                     <span
