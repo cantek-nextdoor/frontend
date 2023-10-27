@@ -4,7 +4,7 @@ import { deepPurple} from '@mui/material/colors';
 // import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 // import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
 // import ModeCommentOutlinedIcon from '@mui/icons-material/ModeCommentOutlined';
-// import IosShareOutlinedIcon from '@mui/icons-material/IosShareOutlined';
+import IosShareOutlinedIcon from '@mui/icons-material/IosShareOutlined';
 import {Post} from '../../pages/types/Post';
 import {useState} from 'react';
 import RowComponent from "../RowComponent";
@@ -74,15 +74,14 @@ getUserDetailRequest(apiUrl)
           {currentPost.description}
         </div>
 
-        {/* <RowComponent>
-          {currentPost.LikedNum === 0 ?
+       <RowComponent>
+          {/*  {currentPost.LikedNum === 0 ?
             <span style={{ color: "#b4b8b5"}}>Be the first to react</span>
             :
-            <div style={{ display: "flex", alignItems: "center", gap: 5}}><ThumbUpIcon sx={{ color: blue[500] }}/> {currentPost.LikedNum}</div>
-          }
+            <div style={{ display: "flex", alignItems: "center", gap: 5}}><ThumbUpIcon sx={{ color: blue[500] }}/> {currentPost.LikedNum}</div> */}
 
-          <RowComponent style={{gap: 10}}>
-            {
+          <RowComponent style={{gap: 10, justifyContent: "flex-end", width: "100%" }}>
+            {/* {
               currentPost.youLiked ?
               <div
                 className="option-style" onClick={likeChange}>
@@ -96,17 +95,21 @@ getUserDetailRequest(apiUrl)
               </div>
             } */}
 
-            {/* <div className="option-style">
+            {/* {
+              currentPost.youLiked ?
+              <div
+                className="option-style" onClick={likeChange}>
+	@@ -100,13 +103,13 @@ getUserDetailRequest(apiUrl)
               <ModeCommentOutlinedIcon />
               {currentPost.comments.length === 0 ? "Comment" : currentPost.comments.length === 1 ? "1 Comment" : currentPost.comments.length + ' Comments'}
             </div> */}
-{/* 
-                        <div className="option-style">
+
+<div className="option-style">
                             <IosShareOutlinedIcon/>
                             Share
                         </div>
-                    </RowComponent> */}
-                {/* </RowComponent> */}
+                    </RowComponent>
+                </RowComponent>
             </div>
         </Paper>
     )
