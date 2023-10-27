@@ -57,7 +57,7 @@ getUserDetailRequest(apiUrl)
       <div style={{ display: "flex", flexDirection: "column", padding: 15, gap: 20}}>
         <RowComponent>
           <RowComponent>
-          <Avatar sx={{ bgcolor: deepPurple[500] }}>{displayName.charAt(0)}</Avatar>
+          <Avatar sx={{ bgcolor: deepPurple[500] }}>{displayName?.charAt(0)}</Avatar>
             <ColumnComponent style={{ marginLeft: 15 }}>
               <span style={{ fontSize: 15, fontWeight: 600}}>{displayName}</span>
               {/* <span style={{ fontSize: 13 }}>{currentPost.location} • {currentPost.time}</span> */}
