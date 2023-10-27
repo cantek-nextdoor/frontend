@@ -60,7 +60,7 @@ const HomePage = () => {
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
-            value={filteredCategory}
+            key={"selectedItem"}
             label="Age"
             onChange={(e) => setFilteredCategory(e.target.value as category)}
           >

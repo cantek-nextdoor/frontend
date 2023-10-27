@@ -1,12 +1,12 @@
 import "./Post.css";
 import {Avatar, Paper} from '@mui/material';
-import {deepPurple} from '@mui/material/colors';
+import { deepPurple} from '@mui/material/colors';
 // import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 // import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
 // import ModeCommentOutlinedIcon from '@mui/icons-material/ModeCommentOutlined';
-import IosShareOutlinedIcon from '@mui/icons-material/IosShareOutlined';
+// import IosShareOutlinedIcon from '@mui/icons-material/IosShareOutlined';
 import {Post} from '../../pages/types/Post';
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 import RowComponent from "../RowComponent";
 import ColumnComponent from "../ColumnComponent";
 import CustomMenu from "../CustomMenu";
@@ -19,10 +19,12 @@ type PostProps = {
     changePost: (inputPost: Post) => void;
 }
 
-const Post = ({post, changePost}: PostProps) => {
-  const [currentPost, setCurrentPost] = useState(post);
+const Post = ({post}: PostProps) => {
+  const [currentPost] = useState(post);
   const [displayName, setDisplayName] = useState("");
-  const currentUserId = useUserStore((state) => state.uuid)
+  const createdPostUserId = currentPost.userId;
+  const apiUrl = '/api/user/details/' + createdPostUserId;
+  // const currentUserId = useUserStore((state) => state.uuid)
 
   // const likeChange = () => {
   //   const temp = currentPost;
@@ -39,23 +41,16 @@ const Post = ({post, changePost}: PostProps) => {
   //     changePost(temp);
   // }
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const createdPostUserId = currentPost.userId;
-        const apiUrl = '/api/user/details/' + createdPostUserId;
-        const response = await getUserDetailRequest(apiUrl);
+getUserDetailRequest(apiUrl)
+    .then((response) => {
         // Handle the response
-        // console.log(response.data.display_name);
-        setDisplayName(response.data.display_name);
-        // console.log("displayname: ", displayName);
-      } catch (error) {
+        setDisplayName(response.data.displayName);
+    })
+    .catch((error) => {
         // Handle errors
         console.error(error);
-      }
-    };
-    fetchData(); // Call the async function
-  }, [currentPost]);
+    });
+
 
     return (
     <Paper elevation={2} sx={{ height: "fit-content", width: "70%" }}>
@@ -66,7 +61,7 @@ const Post = ({post, changePost}: PostProps) => {
               currentPost.avator ?
               <Avatar alt={currentPost.avator} src={currentPost.avator} />
               :
-              <Avatar sx={{ bgcolor: deepPurple[500] }}>{displayName ? displayName.charAt(0) : '?'} </Avatar>
+              <Avatar sx={{ bgcolor: deepPurple[500] }}>{displayName.charAt(0)}</Avatar>
             }
             <ColumnComponent style={{ marginLeft: 15 }}>
               <span style={{ fontSize: 15, fontWeight: 600}}>{displayName}</span>
@@ -81,19 +76,18 @@ const Post = ({post, changePost}: PostProps) => {
         </div> */}
 
         <div style={{ textAlign: "left"}}>
-          {displayName}
           {currentPost.description}
         </div>
 
-        <RowComponent>
-          {/* {currentPost.LikedNum === 0 ?
+        {/* <RowComponent>
+          {currentPost.LikedNum === 0 ?
             <span style={{ color: "#b4b8b5"}}>Be the first to react</span>
             :
             <div style={{ display: "flex", alignItems: "center", gap: 5}}><ThumbUpIcon sx={{ color: blue[500] }}/> {currentPost.LikedNum}</div>
-          } */}
+          }
 
-          <RowComponent style={{gap: 10, justifyContent: "flex-end", width: "100%" }}>
-            {/* {
+          <RowComponent style={{gap: 10}}>
+            {
               currentPost.youLiked ?
               <div
                 className="option-style" onClick={likeChange}>
@@ -111,13 +105,13 @@ const Post = ({post, changePost}: PostProps) => {
               <ModeCommentOutlinedIcon />
               {currentPost.comments.length === 0 ? "Comment" : currentPost.comments.length === 1 ? "1 Comment" : currentPost.comments.length + ' Comments'}
             </div> */}
-
+{/* 
                         <div className="option-style">
                             <IosShareOutlinedIcon/>
                             Share
                         </div>
-                    </RowComponent>
-                </RowComponent>
+                    </RowComponent> */}
+                {/* </RowComponent> */}
             </div>
         </Paper>
     )
