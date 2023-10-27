@@ -20,7 +20,6 @@ import {tags} from "../../components/entities/tags";
 import {LocalizationProvider} from "@mui/x-date-pickers/LocalizationProvider";
 import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
 import {DatePicker} from "@mui/x-date-pickers/DatePicker";
-import {TextareaAutosize} from "@mui/material";
 import {AlertMui} from "../../ui-components/AlertMui.tsx";
 import {useNavigate} from "react-router-dom";
 
@@ -31,9 +30,20 @@ export default function PostForm() {
     const [isAlertOpen, setIsAlertOpen] = useState(false)
     const [isSuccess, setIsSuccess] = useState(false)
     const [alertMessage, setAlertMessage] = useState("")
+    const [category, setCategory] = useState('')
+
+    const categories = [
+        {label: 'Post', value: 'post'},
+        {label: 'Activity', value: 'activity'},
+        {label: 'Sale', value: 'sale'},
+    ]
 
     const navigate = useNavigate();
     const userId = useUserStore((state) => state.uuid);
+
+    const handleCategoryChange = (e: SelectChangeEvent) => {
+        setCategory(e.target.value)
+    }
 
     const handleSelectChange = (event: SelectChangeEvent<typeof tagList>) => {
         const {
@@ -66,6 +76,7 @@ export default function PostForm() {
                 console.log("submit form!");
 
                 const dataToSend = {
+                    categories: category,
                     userId,
                     postId: uuidv4(),
                     title,
@@ -88,7 +99,7 @@ export default function PostForm() {
             setIsSuccess(false)
             setAlertMessage("Cannot create post")
             console.log('Create Post error: ', e)
-        } finally{
+        } finally {
             setIsAlertOpen(true)
         }
     };
@@ -99,13 +110,13 @@ export default function PostForm() {
 
     return (
         <>
-            <AlertMui severity={isSuccess ? 'success' : 'error'} handleAlertClose={handleAlertClose} isAlertOpen={isAlertOpen} message={alertMessage} />
-
+            <AlertMui severity={isSuccess ? 'success' : 'error'} handleAlertClose={handleAlertClose}
+                      isAlertOpen={isAlertOpen} message={alertMessage}/>
             <form onSubmit={handleSubmit}>
                 <Paper elevation={3} sx={{marginRight: "15%", marginLeft: "15%"}}>
                     <Box sx={{padding: 5}}>
                         <Grid container spacing={3}>
-                            <Grid item xs={12} sm={2}>
+                            <Grid item xs={12} sm={3}>
                                 <InputLabel
                                     sx={{
                                         display: "flex",
@@ -116,7 +127,8 @@ export default function PostForm() {
                                     Title
                                 </InputLabel>
                             </Grid>
-                            <Grid item xs={12} sm={10}>
+
+                            <Grid item xs={12} sm={9}>
                                 <TextField
                                     required
                                     id="title"
@@ -129,7 +141,8 @@ export default function PostForm() {
                                     onChange={handleTitleChange}
                                 />
                             </Grid>
-                            <Grid container item xs={12} sm={2} style={{height: "300px"}}>
+
+                            <Grid item xs={12} sm={3}>
                                 <InputLabel
                                     sx={{
                                         display: "flex",
@@ -140,48 +153,21 @@ export default function PostForm() {
                                     Content
                                 </InputLabel>
                             </Grid>
-                            <Grid item xs={12} sm={10} xl={15} style={{height: "300px"}}>
-                                <TextareaAutosize
+                            <Grid item xs={12} sm={9}>
+                                <TextField
+                                    multiline
+                                    rows={4}
+                                    fullWidth
                                     required
                                     id="content"
                                     name="content"
                                     aria-label="content"
                                     placeholder="Type something..."
-                                    minRows={3} // Specify the minimum number of rows
-                                    maxRows={6} // Specify the maximum number of rows
-                                    style={{
-                                        width: "100%",
-                                        height: "50%",
-                                        maxHeight: "250px",
-                                        maxWidth: "100%",
-                                        minWidth: "100%",
-                                        minHeight: "70%",
-                                    }}
                                     value={description}
                                     onChange={handleContentChange}
                                 />
                             </Grid>
-                            <Grid item xs={12} sm={2}>
-                                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                    <DatePicker
-                                        label="Select a start date"
-                                        // value={selectedDate}
-                                        // onChange={handleDateChange}
-                                        defaultValue={today}
-                                        minDate={today}
-                                        disablePast
-                                    />
-                                    <DatePicker
-                                        label="Select a due date"
-                                        // value={selectedDate}
-                                        // onChange={handleDateChange}
-                                        defaultValue={tomorrow}
-                                        minDate={tomorrow}
-                                        disablePast
-                                    />
-                                </LocalizationProvider>
-                            </Grid>
-                            <Grid item xs={12} sm={2}>
+                            <Grid item xs={12} sm={3}>
                                 <InputLabel
                                     sx={{
                                         display: "flex",
@@ -193,19 +179,47 @@ export default function PostForm() {
                                 </InputLabel>
                             </Grid>
 
-                            <Grid item xs={12} sm={4}>
+                            <Grid item xs={12} sm={9}>
+                                <Select
+                                    fullWidth
+                                    labelId="post-category-label"
+                                    id="post-category-select"
+                                    value={category}
+                                    onChange={handleCategoryChange}
+                                >
+                                    {categories.map((category) => (
+                                        <MenuItem key={category.value} value={category.value}>
+                                            {category.label}
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </Grid>
+
+                            <Grid item xs={12} sm={3}>
+                                <InputLabel
+                                    sx={{
+                                        display: "flex",
+                                        justifyContent: "center",
+                                        fontWeight: 700,
+                                    }}
+                                >
+                                    Tags
+                                </InputLabel>
+                            </Grid>
+                            <Grid item xs={12} sm={9}>
                                 <FormControl fullWidth size="small">
                                     <InputLabel id="demo-simple-select-label">Tag</InputLabel>
-
                                     <Select
                                         labelId="demo-multiple-chip-label"
                                         id="demo-multiple-chip"
                                         multiple
                                         value={tagList}
                                         onChange={handleSelectChange}
-                                        input={<OutlinedInput id="select-multiple-chip" label="Chip"/>}
+                                        input={
+                                            <OutlinedInput id="select-multiple-chip" label="Chip"/>
+                                        }
                                         renderValue={(selected) => (
-                                            <Box sx={{display: 'flex', flexWrap: 'wrap', gap: 0.5}}>
+                                            <Box sx={{display: "flex", flexWrap: "wrap", gap: 0.5}}>
                                                 {selected.map((value) => (
                                                     <Chip key={value} label={value}/>
                                                 ))}
@@ -213,22 +227,56 @@ export default function PostForm() {
                                         )}
                                     >
                                         {tags.map((tag) => (
-                                            <MenuItem
-                                                key={tag}
-                                                value={tag}
-                                            >
+                                            <MenuItem key={tag} value={tag}>
                                                 {tag}
                                             </MenuItem>
                                         ))}
                                     </Select>
-
                                 </FormControl>
                             </Grid>
+
+                            <Grid item xs={12} sm={3}>
+                                <InputLabel
+                                    sx={{
+                                        display: "flex",
+                                        justifyContent: "center",
+                                        fontWeight: 700,
+                                    }}
+                                >
+                                    Event Date
+                                </InputLabel>
+                            </Grid>
+
+                            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                <Grid item xs={12} sm={4}>
+                                    <DatePicker
+                                        label="Select a start date"
+                                        // value={selectedDate}
+                                        // onChange={handleDateChange}
+                                        defaultValue={today}
+                                        minDate={today}
+                                        disablePast
+                                    />
+                                </Grid>
+
+                                <Grid item xs={12} sm={4}>
+                                    <DatePicker
+                                        label="Select a due date"
+                                        // value={selectedDate}
+                                        // onChange={handleDateChange}
+                                        defaultValue={tomorrow}
+                                        minDate={tomorrow}
+                                        disablePast
+                                    />
+                                </Grid>
+                            </LocalizationProvider>
+
+
                             <Grid
                                 item
                                 xs={12}
-                                sm={4}
-                                sx={{display: "flex", justifyContent: "center"}}
+                                sm={12}
+                                sx={{display: "flex", justifyContent: "end"}}
                             >
                                 <Button
                                     variant="contained"
