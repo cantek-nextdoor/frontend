@@ -28,7 +28,7 @@ const SaleItemDetail = ({currentItem}: SaleItemDetailProps) => {
             await createExchange({
                 counterparty: '3521047a-cf6b-404a-a356-5ac920b1391d',
                 isCurrentUserSender: true,
-                postId: 1
+                postId: price
             })
 
             const res = await getUserDetail(uuid)

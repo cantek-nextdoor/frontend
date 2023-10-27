@@ -7,7 +7,7 @@ type TUseUserStoreStateProps = {
     isLoggedIn: boolean;
     points: number;
     uuid: string;
-    postalCode: string;
+    postalCode?: string;
 }
 
 type TUseUserStoreProps = {
