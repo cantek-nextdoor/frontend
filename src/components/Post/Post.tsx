@@ -58,9 +58,7 @@ getUserDetailRequest(apiUrl)
         <RowComponent>
           <RowComponent>
             {
-              currentPost.avator ?
-              <Avatar alt={currentPost.avator} src={currentPost.avator} />
-              :
+
               <Avatar sx={{ bgcolor: deepPurple[500] }}>{displayName.charAt(0)}</Avatar>
             }
             <ColumnComponent style={{ marginLeft: 15 }}>

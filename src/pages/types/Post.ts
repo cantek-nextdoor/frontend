@@ -20,7 +20,6 @@ export enum category {
 }
 
 export type Post = {
-  avator: any;
   postId: string;
   title: string;
   imageUrl: string;
