@@ -20,7 +20,6 @@ const App = () => {
                 <Route path="auth" element={<AuthPage/>}/>
                 <Route element={<Navigation/>}>
                     <Route index element={<HomePage/>}/>
-                    <Route path="activities" element={<ActivitiesPage/>}/>
                     <Route path="my-transactions" element={<TransactionPage />} />
                     <Route path='home' element={<HomePage/>}/>
                     <Route path="events" element={<EventsPage />} />
