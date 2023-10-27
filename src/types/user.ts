@@ -5,6 +5,7 @@ export type TAuthPayload = {
     password: string;
 }
 
+
 export type TAuthRes = {
     accessToken: string;
     createdAt: string;
@@ -17,3 +18,5 @@ export type TAuthRes = {
     userType: string;
     uuid: string;
 } & TAbstractRes
+
+export type TRankedUser = Pick<TAuthRes, 'displayName' | 'points' | 'postalCode' | 'uuid'>
