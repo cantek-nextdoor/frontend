@@ -12,20 +12,28 @@ import { status } from "../../components/entities/status";
 //   comments: string[],
 // };
 
+export enum category {
+  all = 'ALL',
+  post = 'POST',
+  activity = 'ACTIVITY',
+  sale = 'SALE',
+}
+
 export type Post = {
-  userId: string,
   postId: string;
   title: string;
   imageUrl: string;
   description: string;
   tags: string[];
   points: number;
+  userId: string,
   numOfLike: number;
   postedDate: Date;
-  eventDate: Date;
   status: status;
   likedUserList: string[];
-  youLiked: boolean;
-  LikedNum: number;
-  avator?: string,
+  categories: category;
+  postalCode?: string;
+  latitude?: number,
+  longitude?: number,
+  eventDateAndTime?: Date;
 };

@@ -17,8 +17,8 @@ export const drawerItems: drawerItemsProps[] = [
         icon: <HomeIcon />,
     },
     {
-        id: "activities",
-        title: "Activities",
+        id: "events",
+        title: "Events",
         icon: <LocalActivityIcon />,
     },
     {
