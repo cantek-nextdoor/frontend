@@ -14,6 +14,7 @@ export type TPostPayload = {
     eventDate: Date;
     status: status;
     likedUserList: string[];
+    postalCode: string;
 }
 
 // export type TPostRes = {

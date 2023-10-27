@@ -1,18 +1,19 @@
 import {useEffect, useState} from "react";
 import Post from '../../components/Post/Post';
 import { getAllPostRequest } from "../../axios/home";
-import postDummyData from "./PostDummyData.json";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { category } from "../types/Post";
+import {useUserStore} from "../../zustand/user";
 import RowComponent from "../../components/RowComponent";
 
 const HomePage = () => {
   const [postList, setPostList] = useState<any[]>([]);
   const [filteredCategory, setFilteredCategory] = useState<category>(category.all);
+  const userPostalCode = useUserStore((state) => state.postalCode);
 
   useEffect(() => {
 
-    getAllPostRequest()
+    getAllPostRequest(userPostalCode, 1)
       .then(response => {
         if (Array.isArray(response.data)) {
           // Store the data array in the state
@@ -28,7 +29,7 @@ const HomePage = () => {
   }, []); // The empty dependency array ensures this runs only once
 
   useEffect(() => {
-    const temp = postDummyData.dummyPost;
+    const temp = postList; // use post list instead of temp
     if (filteredCategory === category.all) setPostList(temp);
     else {    
       setPostList(temp.filter(item => item.categories === filteredCategory))

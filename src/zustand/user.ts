@@ -7,6 +7,7 @@ type TUseUserStoreStateProps = {
     isLoggedIn: boolean;
     points: number;
     uuid: string;
+    postalCode: string;
 }
 
 type TUseUserStoreProps = {
@@ -20,6 +21,7 @@ export const USE_USER_STORE_DEFAULT_PROPS = {
     isLoggedIn: false,
     points: 0,
     uuid: '',
+    postalCode: ''
 }
 
 export const useUserStore = create<TUseUserStoreProps>()(
