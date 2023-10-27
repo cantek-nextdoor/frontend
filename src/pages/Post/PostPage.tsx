@@ -40,6 +40,7 @@ export default function PostForm() {
 
     const navigate = useNavigate();
     const userId = useUserStore((state) => state.uuid);
+    const userPostalCode = useUserStore((state) => state.postalCode);
 
     const handleCategoryChange = (e: SelectChangeEvent) => {
         setCategory(e.target.value)
@@ -85,6 +86,7 @@ export default function PostForm() {
                     tags: tagList,
                     points: 0,
                     numOfLike: 0,
+                    postalCode: userPostalCode,
                     postedDate: new Date(),
                     eventDate: new Date(),
                     status: status.open,

@@ -1,3 +1,3 @@
 import { accessInstance } from "./index.ts";
 
-export const getAllPostRequest = () => accessInstance.get("/api/post/all");
+export const getAllPostRequest = (postalCode:string, distance:number) => accessInstance.get(`/api/post/all/${postalCode}/${distance}`);
